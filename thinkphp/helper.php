@@ -646,7 +646,8 @@ if (!function_exists('U')) {
      */
     function  U($url='',$vars='',$suffix=true,$domain=false) 
     {
-       return Url::build($url, $vars, $suffix, $domain);
+       $url = Url::build($url, $vars, $suffix, $domain);
+       return str_replace('/index.php','',$url);
     }
 }
  

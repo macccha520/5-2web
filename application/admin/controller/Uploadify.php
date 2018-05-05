@@ -22,9 +22,9 @@ class Uploadify extends Base{
         $path = I('path','temp');
         $info = array(
         	'num'=> I('num/d'),
-            'title' => '',       	
-            'upload' =>U('Admin/Ueditor/imageUp',array('savepath'=>$path,'pictitle'=>'banner','dir'=>'images')),
-        	'fileList'=>U('Admin/Uploadify/fileList',array('path'=>$path)),
+            'title' => '',
+            'upload' => U('Admin/Ueditor/imageUp',array('savepath'=>$path,'pictitle'=>'banner','dir'=>'images')),
+        	'fileList'=> U('Admin/Uploadify/fileList',array('path'=>$path)),
             'size' => '4M',
             'type' =>'jpg,png,gif,jpeg',
             'input' => I('input'),
