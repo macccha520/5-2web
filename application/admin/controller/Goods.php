@@ -278,6 +278,7 @@ class Goods extends Base {
      */
     public function addEditGoods()
     {
+        return $this->fetch('_goods');
         $GoodsLogic = new GoodsLogic();
         $Goods = new \app\admin\model\Goods();
         $goods_id = input('goods_id');
