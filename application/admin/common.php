@@ -109,7 +109,8 @@ function getRegionName($regionId){
 }
 
 function getMenuList($act_list){
-	//根据角色权限过滤菜单
+    $role_right = '';
+
 	$menu_list = getAllMenu();
 	if($act_list != 'all'){
 		$right = M('system_menu')->where("id", "in", $act_list)->cache(true)->getField('right',true);
@@ -135,7 +136,7 @@ function getAllMenu(){
 					array('name'=>'友情链接','act'=>'linkList','control'=>'Article'),
 					array('name'=>'自定义导航','act'=>'navigationList','control'=>'System'),
 					array('name'=>'区域管理','act'=>'region','control'=>'Tools'),
-					array('name'=>'短信模板','act'=>'index','control'=>'SmsTemplate'),
+                        array('name'=>'短信模板','act'=>'index','control'=>'SmsTemplate'),
 					
 			)),
 			'access' => array('name' => '权限管理', 'icon'=>'fa-gears', 'sub_menu' => array(
@@ -233,6 +234,8 @@ function getAllMenu(){
 
 function getMenuArr(){
 	$menuArr = include APP_PATH.'admin/conf/menu.php';
+
+    $role_right = '';
 	$act_list = session('act_list');
 	if($act_list != 'all' && !empty($act_list)){
 		$right = M('system_menu')->where("id in ($act_list)")->cache(true)->getField('right',true);

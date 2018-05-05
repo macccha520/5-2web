@@ -7,3 +7,4 @@ runtime/*
 nginx.conf
 nginx.conf2
 nginx.conf3
+application/config.php
