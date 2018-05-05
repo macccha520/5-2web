@@ -97,9 +97,7 @@
             </div>
             <ul class="tab-base nc-row">
                 <li><a href="javascript:void(0);" data-index='1' class="tab current"><span>通用信息</span></a></li>
-                <li><a href="javascript:void(0);" data-index='2' class="tab"><span>商品相册</span></a></li>
-                <li><a href="javascript:void(0);" data-index='3' class="tab"><span>商品模型</span></a></li>
-                <li><a href="javascript:void(0);" data-index='4' class="tab"><span>商品物流</span></a></li>                
+
             </ul>
         </div>
     </div>
@@ -326,19 +324,56 @@
                 </dt>
                 <dd class="opt">
                     <div class="input-file-show">
-            <span class="show">
-                <a id="img_a" target="_blank" class="nyroModal" rel="gal" href="{$goodsInfo.original_img}">
-                    <i id="img_i" class="fa fa-picture-o" onmouseover="layer.tips('<img src={$goodsInfo.original_img}>',this,{tips: [1, '#fff']});" onmouseout="layer.closeAll();"></i>
-                </a>
-            </span>
-            <span class="type-file-box">
-                <input type="text" id="imagetext" name="original_img" value="{$goodsInfo.original_img}" class="type-file-text">
-                <input type="button" name="button" id="button1" value="选择上传..." class="type-file-button">
-                <input class="type-file-file" onClick="GetUploadify(1,'','goods','img_call_back')" size="30" hidefocus="true" nc_type="change_site_logo" title="点击前方预览图可查看大图，点击按钮选择文件并提交表单后上传生效">
-            </span>
+                <span class="show">
+                    <a id="img_a" target="_blank" class="nyroModal" rel="gal" href="{$goodsInfo.original_img}">
+                        <i id="img_i" class="fa fa-picture-o" onmouseover="layer.tips('<img src={$goodsInfo.original_img}>',this,{tips: [1, '#fff']});" onmouseout="layer.closeAll();"></i>
+                    </a>
+                </span>
+                <span class="type-file-box">
+                    <input type="text" id="imagetext" name="original_img" value="{$goodsInfo.original_img}" class="type-file-text">
+                    <input type="button" name="button" id="button1" value="选择上传..." class="type-file-button">
+                    <input class="type-file-file" onClick="GetUploadify(1,'','goods','img_call_back')" size="30" hidefocus="true" nc_type="change_site_logo" title="点击前方预览图可查看大图，点击按钮选择文件并提交表单后上传生效">
+                </span>
                     </div>
                     <span class="err"></span>
                     <p class="notic">请上传图片格式文件</p>
+                </dd>
+            </dl>
+
+            <dl class="row">
+                <dt class="tit">
+                    <label>图片上传</label>
+                </dt>
+                <dd class="opt">
+                <div class="tab-pane" id="tab_goods_images">
+                    <table class="table table-bordered">
+                        <tbody>
+                        <tr>
+                            <td>
+                                <foreach name="goodsImages" item="vo" key="k" >
+                                    <div style="width:100px; text-align:center; margin: 5px; display:inline-block;" class="goods_xc">
+                                        <input type="hidden" value="{$vo['image_url']}" name="goods_images[]">
+                                        <a onClick="" href="{$vo['image_url']}" target="_blank">
+                                            <img width="100" height="100" src="{$vo['image_url']}">
+                                        </a>
+                                        <br>
+                                        <a href="javascript:void(0)" onClick="ClearPicArr2(this,'{$vo[\'image_url\']}')">删除</a>
+                                    </div>
+                                </foreach>
+
+                                <div class="goods_xc" style="width:100px; text-align:center; margin: 5px; display:inline-block;">
+                                    <input type="hidden" name="goods_images[]" value="" />
+                                    <a href="javascript:void(0);" onClick="GetUploadify(10,'','goods','call_back2');">
+                                        <img src="/public/images/add-button.jpg" width="100" height="100" />
+                                    </a>
+                                    <br/>
+                                    <a href="javascript:void(0)">&nbsp;&nbsp;</a>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
                 </dd>
             </dl>
 
@@ -420,104 +455,7 @@
             </dl>                                                                                                                                           
         </div>
 <!--通用信息-->
-<!-- 商品相册-->        
-		<div class="ncap-form-default tab_div_2" style="display:none;">
-            <dl class="row">
-                
-                         <div class="tab-pane" id="tab_goods_images">
-                            <table class="table table-bordered">
-                                <tbody>
-                                <tr>                                    
-                                    <td>                                    
-                                    <foreach name="goodsImages" item="vo" key="k" >
-                                        <div style="width:100px; text-align:center; margin: 5px; display:inline-block;" class="goods_xc">
-                                            <input type="hidden" value="{$vo['image_url']}" name="goods_images[]">
-                                            <a onClick="" href="{$vo['image_url']}" target="_blank"><img width="100" height="100" src="{$vo['image_url']}"></a>
-                                            <br>
-                                            <a href="javascript:void(0)" onClick="ClearPicArr2(this,'{$vo['image_url']}')">删除</a>
-                                        </div>
-                                    </foreach>
-                                    
-                                        <div class="goods_xc" style="width:100px; text-align:center; margin: 5px; display:inline-block;">
-                                            <input type="hidden" name="goods_images[]" value="" />
-                                            <a href="javascript:void(0);" onClick="GetUploadify(10,'','goods','call_back2');"><img src="/public/images/add-button.jpg" width="100" height="100" /></a>
-                                            <br/>
-                                            <a href="javascript:void(0)">&nbsp;&nbsp;</a>
-                                        </div>                                        
-                                    </td>
-                                </tr>                                              
-                                </tbody>
-                            </table>
-                        </div>
-                
-            </dl>             
-        </div>   
-<!-- 商品相册-->
-<!-- 商品模型-->
-		<div class="ncap-form-default tab_div_3" style="display:none;">
-            <dl class="row">
 
-                        <div class="tab-pane" id="tab_goods_spec">
-                            <table class="table table-bordered" id="goods_spec_table">                                
-                                <tr>
-                                    <td>商品模型:</td>
-                                    <td>                                        
-                                      <select name="goods_type" id="spec_type" class="form-control" style="width:250px;">
-                                        <option value="0">选择商品模型</option>
-                                        <foreach name="goodsType" item="vo" key="k" >
-                                            <option value="{$vo.id}"<if condition="$goodsInfo[goods_type] eq $vo[id]"> selected="selected" </if> >{$vo.name}</option>
-                                        </foreach>                                        
-                                      </select>
-                                    </td>
-                                </tr>                            
-                            </table>
-                            <div class="row">
-                            	<!-- ajax 返回规格-->
-                            	<div id="ajax_spec_data" class="col-xs-8" ></div>
-                            	<div id="" class="col-xs-4" >
-                            	    <table class="table table-bordered" id="goods_attr_table">                                
-		                                <tr>
-		                                    <td><b>商品属性</b>：</td>
-		                                </tr>                                
-		                            </table>
-                            	</div>
-                            </div>
-                        </div>
-                
-            </dl>             
-        </div>   
-<!-- 商品模型-->         
-<!-- 商品物流-->
-		<div class="ncap-form-default tab_div_4" style="display:none;">
-            <dl class="row">
-                        <div class="tab-pane" id="tab_goods_shipping">
-                            <h4><b>物流配送：</b><input type="checkbox" onClick="choosebox(this)">全选</h4>
-                            <table class="table table-bordered table-striped dataTable" id="goods_shipping_table">
-                                <foreach name="plugin_shipping" item="shipping" key="kk">
-                                    <tr>
-                                        <td class="title left" style="padding-right:50px;">
-                                            <b>{$shipping[name]}：</b>
-                                            <label class="right"><input type="checkbox" value="1" cka="mod-{$kk}">全选</label>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <ul class="group-list">
-                                                <foreach name="shipping_area" item="vv">
-                                                    <if condition="$vv[shipping_code] eq $shipping[code]">
-                                                        <li><label><input type="checkbox" name="shipping_area_ids[]" value="{$vv.shipping_area_id}" <if condition="in_array($vv['shipping_area_id'],$goods_shipping_area_ids)">checked='checked='</if> ck="mod-{$kk}">{$vv.shipping_area_name}</label></li>
-                                                    </if>
-                                                </foreach>
-                                                <div class="clear-both"></div>
-                                            </ul>
-                                        </td>
-                                    </tr>
-                                </foreach>
-                            </table>
-                        </div>                
-            </dl>             
-        </div>   
-<!-- 商品物流-->
 
 		<div class="ncap-form-default">        
             <div class="bot">            
@@ -644,7 +582,7 @@ $(document).ready(function(){
                     success:function(data){                            
                            $("#ajax_spec_data").html('')
                            $("#ajax_spec_data").append(data);
-			   ajaxGetSpecInput();	// 触发完  马上触发 规格输入框
+			                ajaxGetSpecInput();	// 触发完  马上触发 规格输入框
                     }
             });           
             //商品类型切换时 ajax 调用  返回不同的属性输入框     
@@ -675,28 +613,27 @@ $(document).ready(function(){
 
 	<if condition="$level_cat['2'] gt 0">
 		 // 商品分类第二个下拉菜单
-		 get_category('{$level_cat[1]}','cat_id_2','{$level_cat[2]}');	
+		 get_category('{$level_cat[1]}','cat_id_2','{$level_cat[2]}');
 	</if>
 	<if condition="$level_cat['3'] gt 0">
 		// 商品分类第二个下拉菜单
-		 get_category('{$level_cat[2]}','cat_id_3','{$level_cat[3]}');	 
+		 get_category('{$level_cat[2]}','cat_id_3','{$level_cat[3]}');
 	</if>
 
     //  扩展分类
 	<if condition="$level_cat2['2'] gt 0">
 		 // 商品分类第二个下拉菜单
-		 get_category('{$level_cat2[1]}','extend_cat_id_2','{$level_cat2[2]}');	
+		 get_category('{$level_cat2[1]}','extend_cat_id_2','{$level_cat2[2]}');
 	</if>
 	<if condition="$level_cat2['3'] gt 0">
 		// 商品分类第二个下拉菜单
-		 get_category('{$level_cat2[2]}','extend_cat_id_3','{$level_cat2[3]}');	 
+		 get_category('{$level_cat2[2]}','extend_cat_id_3','{$level_cat2[3]}');
 	</if>
 
 });
  
  
     $(document).ready(function(){
-     
         //插件切换列表
         $('.tab-base').find('.tab').click(function(){
             $('.tab-base').find('.tab').each(function(){

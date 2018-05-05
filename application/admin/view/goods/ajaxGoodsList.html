@@ -31,47 +31,17 @@
                 <td align="center" axis="col0">
                   <div style="text-align: center; width: 50px;">{$list.shop_price}</div>
                 </td>               
-                <td align="center" axis="col0">
-                  <div style="text-align: center; width: 30px;">
-                    <if condition='$list[is_recommend] eq 1'>
-                      <span class="yes" onClick="changeTableVal('goods','goods_id','{$list.goods_id}','is_recommend',this)" ><i class="fa fa-check-circle"></i>是</span>
-                      <else />
-                      <span class="no" onClick="changeTableVal('goods','goods_id','{$list.goods_id}','is_recommend',this)" ><i class="fa fa-ban"></i>否</span>
-                    </if>
-                  </div>
-                </td>                
-                <td align="center" axis="col0">
-                  <div style="text-align: center; width: 30px;">
-                    <if condition='$list[is_new] eq 1'>
-                      <span class="yes" onClick="changeTableVal('goods','goods_id','{$list.goods_id}','is_new',this)" ><i class="fa fa-check-circle"></i>是</span>
-                      <else />
-                      <span class="no" onClick="changeTableVal('goods','goods_id','{$list.goods_id}','is_new',this)" ><i class="fa fa-ban"></i>否</span>
-                    </if>
-                  </div>
-                </td>       
-                <td align="center" axis="col0">
-                  <div style="text-align: center; width: 30px;">
-                    <if condition='$list[is_hot] eq 1'>
-                      <span class="yes" onClick="changeTableVal('goods','goods_id','{$list.goods_id}','is_hot',this)" ><i class="fa fa-check-circle"></i>是</span>
-                      <else />
-                      <span class="no" onClick="changeTableVal('goods','goods_id','{$list.goods_id}','is_hot',this)" ><i class="fa fa-ban"></i>否</span>
-                    </if>
-                  </div>
-                </td>       
+
                 <td align="center" axis="col0">
                   <div style="text-align: center; width: 50px;">
-                    <if condition='$list[is_on_sale] eq 1'>
+                    <if condition='$list.is_on_sale eq 1'>
                       <span class="yes" onClick="changeTableVal('goods','goods_id','{$list.goods_id}','is_on_sale',this)" ><i class="fa fa-check-circle"></i>是</span>
                       <else />
                       <span class="no" onClick="changeTableVal('goods','goods_id','{$list.goods_id}','is_on_sale',this)" ><i class="fa fa-ban"></i>否</span>
                     </if>
                   </div>
                 </td>    
-                <td align="center" axis="col0">                  
-                <div style="text-align: center; width: 50px; <if condition="$list.store_count elt tpCache('basic.warning_storage')">color:#D91222;</if> ">
-                  {$list.store_count}
-                </div>
-                </td>           
+
                 <td align="center" axis="col0">                  
                 <div style="text-align: center; width: 50px;">
                   <input type="text" onKeyUp="this.value=this.value.replace(/[^\d]/g,'')" onpaste="this.value=this.value.replace(/[^\d]/g,'')" onChange="changeTableVal('goods','goods_id','{$list.goods_id}','sort',this)" size="4" value="{$list.sort}" />
