@@ -280,13 +280,13 @@ class Goods extends Base {
     {
         $GoodsLogic = new GoodsLogic();
         $Goods = new \app\admin\model\Goods();
-        $goods_id = I('goods_id');
+        $goods_id = input('goods_id');
         $type = $goods_id > 0 ? 2 : 1; // 标识自动验证时的 场景 1 表示插入 2 表示更新
         //ajax提交验证
         if ((I('is_ajax') == 1) && IS_POST) {
             // 数据验证
             $is_distribut = input('is_distribut');
-            $return_url = $is_distribut > 0 ? U('admin/Distribut/goods_list') : U('admin/Goods/goodsList');
+            $return_url = $is_distribut > 0 ? url('admin/Distribut/goods_list') : url('admin/Goods/goodsList');
             $data = input('post.');
             $validate = \think\Loader::validate('Goods');
             if (!$validate->batch()->check($data)) {
@@ -316,7 +316,9 @@ class Goods extends Base {
                     $price_ladder[$key]['price'] = floatval($Goods->ladder_price[$key]);
                 }
                 $price_ladder = array_values(array_sort($price_ladder, 'amount', 'asc'));
+
                 $price_ladder_max = count($price_ladder);
+
                 if ($price_ladder[$price_ladder_max - 1]['price'] >= $Goods->shop_price) {
                     $return_arr = array(
                         'msg' => '价格阶梯最大金额不能大于商品原价！',
@@ -340,7 +342,7 @@ class Goods extends Base {
             if ($type == 2) {
                 $Goods->isUpdate(true)->save(); // 写入数据到数据库
                 // 修改商品后购物车的商品价格也修改一下
-                M('cart')->where("goods_id = $goods_id and spec_key = ''")->save(array(
+                db('cart')->where("goods_id = $goods_id and spec_key = ''")->save(array(
                     'market_price' => I('market_price'), //市场价
                     'goods_price' => I('shop_price'), // 本店价
                     'member_goods_price' => I('shop_price'), // 会员折扣价
@@ -359,17 +361,17 @@ class Goods extends Base {
             $this->ajaxReturn($return_arr);
         }
 
-        $goodsInfo = M('Goods')->where('goods_id=' . I('GET.id', 0))->find();
+        $goodsInfo = db('Goods')->where('goods_id=' . I('GET.id', 0))->find();
         if ($goodsInfo['price_ladder']) {
             $goodsInfo['price_ladder'] = unserialize($goodsInfo['price_ladder']);
         }
         $level_cat = $GoodsLogic->find_parent_cat($goodsInfo['cat_id']); // 获取分类默认选中的下拉框
         $level_cat2 = $GoodsLogic->find_parent_cat($goodsInfo['extend_cat_id']); // 获取分类默认选中的下拉框
-        $cat_list = M('goods_category')->where("parent_id = 0")->select(); // 已经改成联动菜单
+        $cat_list = db('goods_category')->where("parent_id = 0")->select(); // 已经改成联动菜单
         $brandList = $GoodsLogic->getSortBrands();
-        $goodsType = M("GoodsType")->select();
-        $suppliersList = M("suppliers")->select();
-        $plugin_shipping = M('plugin')->where(array('type' => array('eq', 'shipping')))->select();//插件物流
+        $goodsType = db("GoodsType")->select();
+        $suppliersList = db("suppliers")->select();
+        $plugin_shipping = db('plugin')->where(array('type' => array('eq', 'shipping')))->select();//插件物流
         $shipping_area = D('Shipping_area')->getShippingArea();//配送区域
         $goods_shipping_area_ids = explode(',', $goodsInfo['shipping_area_ids']);
         $this->assign('goods_shipping_area_ids', $goods_shipping_area_ids);
@@ -382,7 +384,7 @@ class Goods extends Base {
         $this->assign('brandList', $brandList);
         $this->assign('goodsType', $goodsType);
         $this->assign('goodsInfo', $goodsInfo);  // 商品详情
-        $goodsImages = M("GoodsImages")->where('goods_id =' . I('GET.id', 0))->select();
+        $goodsImages = db("GoodsImages")->where('goods_id =' . I('GET.id', 0))->select();
         $this->assign('goodsImages', $goodsImages);  // 商品相册
         $this->initEditor(); // 编辑器
         return $this->fetch('_goods');
