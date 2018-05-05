@@ -9,3 +9,5 @@ nginx.conf2
 nginx.conf3
 application/config.php
 .application/config.php
+public
+public/*
