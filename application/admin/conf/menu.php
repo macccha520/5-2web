@@ -56,6 +56,9 @@ return	array(
         array(
             array('name' => '会员','child'=>array(
                 array('name'=>'会员列表','act'=>'index','op'=>'User'),
+                array('name'=>'广告列表','act'=>'adList','op'=>'Ad'),
+                array('name'=>'广告位置','act'=>'positionList','op'=>'Ad'),
+                array('name' => '优惠券','act'=>'index', 'op'=>'Coupon'),
 //                array('name'=>'会员等级','act'=>'levelList','op'=>'User'),
 //                array('name'=>'充值记录','act'=>'recharge','op'=>'User'),
 //                array('name'=>'提现申请','act'=>'withdrawals','op'=>'User'),
@@ -63,9 +66,9 @@ return	array(
                 //array('name'=>'会员整合','act'=>'integrate','op'=>'User'),
             )),
 
-            array('name' => '商品','child' => array(
+            array('name' => '房源','child' => array(
 //					array('name' => '商品分类', 'act'=>'categoryList', 'op'=>'Goods'),
-					array('name' => '商品列表', 'act'=>'goodsList', 'op'=>'Goods'),
+					array('name' => '房源列表', 'act'=>'goodsList', 'op'=>'Goods'),
 //					array('name' => '库存日志', 'act'=>'stock_list', 'op'=>'Goods'),
 //					array('name' => '商品模型', 'act'=>'goodsTypeList', 'op'=>'Goods'),
 //					array('name' => '商品规格', 'act' =>'specList', 'op' => 'Goods'),
@@ -83,14 +86,14 @@ return	array(
 //					array('name' => '添加订单', 'act'=>'add_order', 'op'=>'Order'),
 //			        array('name' => '订单日志','act'=>'order_log','op'=>'Order'),
 			)),
-			array('name' => '促销','child' => array(
+//			array('name' => '促销','child' => array(
 //					array('name' => '抢购管理', 'act'=>'flash_sale', 'op'=>'Promotion'),
 //					array('name' => '团购管理', 'act'=>'group_buy_list', 'op'=>'Promotion'),
 //					array('name' => '优惠促销', 'act'=>'prom_goods_list', 'op'=>'Promotion'),
 //					array('name' => '订单促销', 'act'=>'prom_order_list', 'op'=>'Promotion'),
-					array('name' => '优惠券','act'=>'index', 'op'=>'Coupon'),
+//					array('name' => '优惠券','act'=>'index', 'op'=>'Coupon'),
 //					array('name' => '预售管理','act'=>'pre_sell_list', 'op'=>'Promotion'),
-			)),
+//			)),
 
 //			array('name' => '分销','child' => array(
 //					array('name' => '分销商品列表', 'act'=>'goods_list', 'op'=>'Distribut'),
@@ -106,29 +109,27 @@ return	array(
 //    	        array('name' => '文本回复', 'act'=>'text', 'op'=>'Wechat'),
 //    	        //array('name' => '图文回复', 'act'=>'img', 'op'=>'Wechat'),
 //    	    )),
-
-
-			array('name' => '统计','child' => array(
-					array('name' => '销售概况', 'act'=>'index', 'op'=>'Report'),
-					array('name' => '销售排行', 'act'=>'saleTop', 'op'=>'Report'),
-					array('name' => '会员排行', 'act'=>'userTop', 'op'=>'Report'),
-					array('name' => '销售明细', 'act'=>'saleList', 'op'=>'Report'),
-					array('name' => '会员统计', 'act'=>'user', 'op'=>'Report'),
-					array('name' => '运营概览', 'act'=>'finance', 'op'=>'Report'),
-			)),
+//			array('name' => '统计','child' => array(
+//					array('name' => '销售概况', 'act'=>'index', 'op'=>'Report'),
+//					array('name' => '销售排行', 'act'=>'saleTop', 'op'=>'Report'),
+//					array('name' => '会员排行', 'act'=>'userTop', 'op'=>'Report'),
+//					array('name' => '销售明细', 'act'=>'saleList', 'op'=>'Report'),
+//					array('name' => '会员统计', 'act'=>'user', 'op'=>'Report'),
+//					array('name' => '运营概览', 'act'=>'finance', 'op'=>'Report'),
+//			)),
 	)),
 
-	'mobile'=>array('name'=>'模板','child'=>array(
-			array('name' => '设置','child' => array(
-					array('name' => '模板设置', 'act'=>'templateList', 'op'=>'Template'),
-					array('name' => '手机支付', 'act'=>'templateList', 'op'=>'Template'),
-					array('name' => '微信二维码', 'act'=>'templateList', 'op'=>'Template'),
-					array('name' => '第三方登录', 'act'=>'templateList', 'op'=>'Template'),
-					array('name' => '导航管理', 'act'=>'finance', 'op'=>'Report'),
-					array('name' => '广告管理', 'act'=>'finance', 'op'=>'Report'),
-					array('name' => '广告位管理', 'act'=>'finance', 'op'=>'Report'),
-			)),
-	)),
+//	'mobile'=>array('name'=>'模板','child'=>array(
+//			array('name' => '设置','child' => array(
+//					array('name' => '模板设置', 'act'=>'templateList', 'op'=>'Template'),
+//					array('name' => '手机支付', 'act'=>'templateList', 'op'=>'Template'),
+//					array('name' => '微信二维码', 'act'=>'templateList', 'op'=>'Template'),
+//					array('name' => '第三方登录', 'act'=>'templateList', 'op'=>'Template'),
+//					array('name' => '导航管理', 'act'=>'finance', 'op'=>'Report'),
+//					array('name' => '广告管理', 'act'=>'finance', 'op'=>'Report'),
+//					array('name' => '广告位管理', 'act'=>'finance', 'op'=>'Report'),
+//			)),
+//	)),
 
 //	'resource'=>array('name'=>'插件','child'=>array(
 //			array('name' => '云服务','child' => array(
