@@ -362,7 +362,7 @@ class Goods extends Base {
         }
 
         $goodsInfo = db('Goods')
-                    ->where('goods_id=' . I('GET.id', 0))
+                    ->where('goods_id',$goods_id)
                     ->find();
         if ($goodsInfo['price_ladder']) {
             $goodsInfo['price_ladder'] = unserialize($goodsInfo['price_ladder']);
@@ -370,23 +370,27 @@ class Goods extends Base {
         $level_cat = $GoodsLogic->find_parent_cat($goodsInfo['cat_id']); // 获取分类默认选中的下拉框
         $level_cat2 = $GoodsLogic->find_parent_cat($goodsInfo['extend_cat_id']); // 获取分类默认选中的下拉框
         $cat_list = db('goods_category')->where("parent_id = 0")->select(); // 已经改成联动菜单
-        $brandList = $GoodsLogic->getSortBrands();
-        $goodsType = db("GoodsType")->select();
-        $suppliersList = db("suppliers")->select();
-        $plugin_shipping = db('plugin')->where(array('type' => array('eq', 'shipping')))->select();//插件物流
-        $shipping_area = D('Shipping_area')->getShippingArea();//配送区域
+        //$brandList = $GoodsLogic->getSortBrands();
+//        $goodsType = db("GoodsType")->select();
+//        $suppliersList = db("suppliers")->select();
+//        $plugin_shipping = db('plugin')
+//            ->where(array('type' => array('eq', 'shipping')))
+//            ->select();//插件物流
+        //$shipping_area = D('Shipping_area')->getShippingArea();//配送区域
         $goods_shipping_area_ids = explode(',', $goodsInfo['shipping_area_ids']);
         $this->assign('goods_shipping_area_ids', $goods_shipping_area_ids);
-        $this->assign('shipping_area', $shipping_area);
-        $this->assign('plugin_shipping', $plugin_shipping);
-        $this->assign('suppliersList', $suppliersList);
+//        $this->assign('shipping_area', $shipping_area);
+//        $this->assign('plugin_shipping', $plugin_shipping);
+//        $this->assign('suppliersList', $suppliersList);
         $this->assign('level_cat', $level_cat);
         $this->assign('level_cat2', $level_cat2);
         $this->assign('cat_list', $cat_list);
-        $this->assign('brandList', $brandList);
-        $this->assign('goodsType', $goodsType);
+        //$this->assign('brandList', $brandList);
+//        $this->assign('goodsType', $goodsType);
         $this->assign('goodsInfo', $goodsInfo);  // 商品详情
-        $goodsImages = db("GoodsImages")->where('goods_id =' . I('GET.id', 0))->select();
+        $goodsImages = db("GoodsImages")
+            ->where('goods_id',$goods_id)
+            ->select();
         $this->assign('goodsImages', $goodsImages);  // 商品相册
         $this->initEditor(); // 编辑器
         return $this->fetch('_goods');
