@@ -44,7 +44,7 @@ class User extends Base {
                
         $model = M('users');
         $count = $model->where($condition)->count();
-        $Page  = new AjaxPage($count,10);
+        $Page  = new AjaxPage($count,config('PAGESIZE'));
         //  搜索条件下 分页赋值
         foreach($condition as $key=>$val) {
             $Page->parameter[$key]   =   urlencode($val);

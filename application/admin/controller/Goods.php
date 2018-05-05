@@ -203,7 +203,7 @@ class Goods extends Base {
      */
     public function ajaxGoodsList(){            
         
-        $where = ' 1 = 1 '; // 搜索条件                
+        $where = ' 1 = 1 ';
         I('intro')    && $where = "$where and ".I('intro')." = 1" ;        
         I('brand_id') && $where = "$where and brand_id = ".I('brand_id') ;
         (I('is_on_sale') !== '') && $where = "$where and is_on_sale = ".I('is_on_sale') ;                
@@ -222,12 +222,7 @@ class Goods extends Base {
         }
         
         $count = M('Goods')->where($where)->count();
-        $Page  = new AjaxPage($count,10);
-        /**  搜索条件下 分页赋值
-        foreach($condition as $key=>$val) {
-            $Page->parameter[$key]   =   urlencode($val);
-        }
-        */
+        $Page  = new AjaxPage($count,config('PAGESIZE'));
         $show = $Page->show();
         $order_str = "`{$_POST['orderby1']}` {$_POST['orderby2']}";
         $goodsList = M('Goods')->where($where)->order($order_str)->limit($Page->firstRow.','.$Page->listRows)->select();

@@ -339,7 +339,7 @@ return [
      */
 
     /*分页每页显示数*/
-    'PAGESIZE' => 10,
+    'PAGESIZE' => 20,
 
     /**假设这个访问地址是 www.tpshop.cn/home/goods/goodsInfo/id/1.html 
      *就保存名字为 home_goods_goodsinfo_1.html     
