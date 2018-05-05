@@ -201,13 +201,11 @@ return [
 //        // 缓存有效期 0表示永久缓存
 //        'expire' => 0,
 //    ],
-   
-
     'cache'        => [
         // 驱动方式
-        'type'   => 'redis',        
+        'type'   => 'redis',
         'host'   => '127.0.0.1',
-    ],    
+    ],
 
     // +----------------------------------------------------------------------
     // | 会话设置
@@ -221,7 +219,6 @@ return [
         'prefix'         => 'think',
         // 驱动方式 支持redis memcache memcached
         'type'           => '',
-        // 是否自动开启 SESSION
         'auto_start'     => true,
     ],
 

@@ -1,17 +1,5 @@
 <?php
-/**
- * tpshop
- * ============================================================================
- * 版权所有 2015-2027 深圳搜豹网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.tp-shop.cn
- * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和使用 .
- * 不允许对程序代码以任何形式任何目的的再发布。
- * 采用TP5助手函数可实现单字母函数M D U等,也可db::name方式,可双向兼容
- * ============================================================================
- * Author: IT宇宙人     
- * Date: 2015-09-09
- */
+
 namespace app\admin\controller;
 use app\admin\logic\GoodsLogic;
 use app\admin\logic\SearchWordLogic;
@@ -60,7 +48,7 @@ class Goods extends Base {
             $GoodsCategory = D('GoodsCategory'); //
 
             $type = I('id') > 0 ? 2 : 1; // 标识自动验证时的 场景 1 表示插入 2 表示更新                        
-            //ajax提交验证
+            //ajax提交验证goodsList
             if(I('is_ajax') == 1)
             {
                 // 数据验证            
@@ -201,7 +189,7 @@ class Goods extends Base {
     /**
      *  商品列表
      */
-    public function goodsList(){      
+    public function goodsList(){
         $GoodsLogic = new GoodsLogic();        
         $brandList = $GoodsLogic->getSortBrands();
         $categoryList = $GoodsLogic->getSortCategory();
