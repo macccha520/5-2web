@@ -190,11 +190,11 @@ class Goods extends Base {
      *  商品列表
      */
     public function goodsList(){
-//        $GoodsLogic = new GoodsLogic();
-//        $brandList = $GoodsLogic->getSortBrands();
-//        $categoryList = $GoodsLogic->getSortCategory();
-//        $this->assign('categoryList',$categoryList);
-//        $this->assign('brandList',$brandList);
+        $GoodsLogic = new GoodsLogic();
+        $brandList = $GoodsLogic->getSortBrands();
+        $categoryList = $GoodsLogic->getSortCategory();
+        $this->assign('categoryList',$categoryList);
+        $this->assign('brandList',$brandList);
         return $this->fetch();
     }
     
@@ -361,7 +361,9 @@ class Goods extends Base {
             $this->ajaxReturn($return_arr);
         }
 
-        $goodsInfo = db('Goods')->where('goods_id=' . I('GET.id', 0))->find();
+        $goodsInfo = db('Goods')
+                    ->where('goods_id=' . I('GET.id', 0))
+                    ->find();
         if ($goodsInfo['price_ladder']) {
             $goodsInfo['price_ladder'] = unserialize($goodsInfo['price_ladder']);
         }

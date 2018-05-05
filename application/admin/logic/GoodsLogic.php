@@ -443,7 +443,7 @@ class GoodsLogic extends Model
      */
     function getSortBrands()
     {
-        $brandList = S('getSortBrands',$brandList);
+        $brandList = S('getSortBrands');
         if(!empty($brandList))
             return $brandList;    
         $brandList =  M("Brand")->cache(true)->select();
