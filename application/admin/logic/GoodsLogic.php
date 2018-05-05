@@ -446,8 +446,12 @@ class GoodsLogic extends Model
         $brandList = S('getSortBrands');
         if(!empty($brandList))
             return $brandList;    
-        $brandList =  M("Brand")->cache(true)->select();
-        $brandIdArr =  M("Brand")->cache(true)->where("name in (select `name` from `".C('database.prefix')."brand` group by name having COUNT(id) > 1)")->getField('id,cat_id');
+        $brandList =  M("Brand")
+                    ->cache(true)->select();
+        $brandIdArr =  M("Brand")
+                        ->cache(true)
+                    ->where("name in (select `name` from `".C('database.prefix')."brand` group by name having COUNT(id) > 1)")
+                    ->getField('id,cat_id');
         $goodsCategoryArr = M('goodsCategory')->cache(true)->where("level = 1")->getField('id,name');
         $nameList = array();
         foreach($brandList as $k => $v)
@@ -455,8 +459,8 @@ class GoodsLogic extends Model
 
             $name = getFirstCharter($v['name']) .'  --   '. $v['name']; // 前面加上拼音首字母
 
-            if(array_key_exists($v[id],$brandIdArr) && $v[cat_id]) // 如果有双重品牌的 则加上分类名称
-                    $name .= ' ( '. $goodsCategoryArr[$v[cat_id]] . ' ) ';
+            if(array_key_exists($v['id'],$brandIdArr) && $v['cat_id']) // 如果有双重品牌的 则加上分类名称
+                    $name .= ' ( '. $goodsCategoryArr[$v['cat_id']] . ' ) ';
 
              $nameList[] = $v['name'] = $name;
              $brandList[$k] = $v;
