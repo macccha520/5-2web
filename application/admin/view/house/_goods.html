@@ -1,0 +1,391 @@
+<include file="public/layout" />
+
+<style>
+    ul.group-list {
+        width: 96%;min-width: 1000px; margin: auto 5px;list-style: disc outside none;
+    }
+    ul.group-list li {
+        white-space: nowrap;float: left;
+        width: 150px; height: 25px;
+        padding: 3px 5px;list-style-type: none;
+        list-style-position: outside;border: 0px;margin: 0px;
+    }
+    .row .table-bordered td .btn,.row .table-bordered td img{
+        vertical-align: middle;
+    }
+    .row .table-bordered td{
+      padding: 8px;
+      line-height: 1.42857143;
+    }
+    .table-bordered{
+      width: 100%
+    }
+    .table-bordered tr td{
+      border: 1px solid #f4f4f4;
+    }
+    .btn-success {
+        color: #fff;
+        background-color: #449d44;
+        border-color: #398439 solid 1px;
+    }
+    .btn {
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+.col-xs-8 {
+    width: 66.66666667%;
+}
+.col-xs-4 {
+    width: 33.33333333%;
+}
+.col-xs-1, .col-xs-10, .col-xs-11, .col-xs-12, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9 {
+    float: left;
+}
+.row .tab-pane h4{
+  padding: 10px 0;
+}
+.row .tab-pane h4 input{
+  vertical-align: middle;
+} 
+.table-striped>tbody>tr:nth-of-type(odd) {
+    background-color: #f9f9f9;
+}
+.ncap-form-default .title{
+  border-bottom: 0
+}
+.ncap-form-default dl.row, .ncap-form-all dd.opt{
+    /*border-color: #F0F0F0;*/
+    border: none;
+}
+.ncap-form-default dl.row:hover, .ncap-form-all dd.opt:hover{
+    border: none;
+    box-shadow: inherit;
+}
+</style>
+<!--物流配置 css -end-->
+<!--以下是在线编辑器 代码 -->
+<load href="__ROOT__/public/plugins/Ueditor/ueditor.config.js"/>
+<load href="__ROOT__/public/plugins/Ueditor/ueditor.all.min.js"/>
+<script type="text/javascript" charset="utf-8" src="__ROOT__/public/plugins/Ueditor/lang/zh-cn/zh-cn.js"></script>
+<!--以上是在线编辑器 代码  end-->
+<body style="background-color: #FFF; overflow: auto;">
+<div id="append_parent"></div>
+<div id="ajaxwaitid"></div>
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>房源设置</h3>
+                <h5>房源基本信息设置</h5>
+            </div>
+            <ul class="tab-base nc-row">
+                <li><a href="javascript:void(0);" data-index='1' class="tab current"><span>通用信息</span></a></li>
+
+            </ul>
+        </div>
+    </div>
+    <!-- 操作说明 -->
+    <div class="explanation" id="explanation">
+        <div class="title" id="checkZoom"><i class="fa fa-lightbulb-o"></i>
+            <h4 title="提示相关设置操作时应注意的要点">操作提示</h4>
+            <span id="explanationZoom" title="收起提示"></span> </div>
+        <ul>
+            <li>请务必正确填写房源信息</li>
+        </ul>
+    </div>
+    <!--表单数据-->
+    <form method="post" id="addEditGoodsForm">
+<!--通用信息-->
+        <div class="ncap-form-default tab_div_1">
+            <dl class="row">
+                <dt class="tit">
+                    <label for="record_no">房源名称</label>
+                </dt>
+                <dd class="opt">
+                    <input type="text" value="{$goodsInfo.house_name}" name="house_name" class="input-txt"/>
+                    <span class="err" id="err_goods_name" style="color:#F00; display:none;"></span>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label for="record_no">房源规格</label>
+                </dt>
+                <dd class="opt">
+                    <input type="text" value="{$goodsInfo.house_standard ? $goodsInfo.house_standard : '整套 · 1室2厅1厨1卫'}" name="house_standard" class="input-txt"/>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label for="store_name">房源介绍</label>
+                </dt>
+                <dd class="opt">
+                    <textarea rows="3" cols="80" name="house_introduce" class="input-txt">{$goodsInfo.house_introduce}</textarea>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label for="store_name">周边介绍</label>
+                </dt>
+                <dd class="opt">
+                    <textarea rows="3" cols="80" name="around_introduce" class="input-txt">{$goodsInfo.around_introduce}</textarea>
+                </dd>
+            </dl>
+
+
+            <dl class="row">
+                <dt class="tit">
+                    <label for="record_no">房源位置</label>
+                </dt>
+                <dd class="opt">
+                      <select name="province" id="cat_id" onChange="_get_category(this.value,'cat_id_2','0');" class="small form-control">
+                        <option value="0">请选择</option>
+                             <foreach name="area" item="v" key="k" >
+                               <option value="{$v.citycode}" >{$v.cityname}</option>
+                             </foreach>
+                      </select>
+                      <select name="city" id="cat_id_2" onChange="_get_category(this.value,'cat_id_3','0');" class="small form-control">
+                            <option value="0">请选择</option>
+                      </select>
+                      <select name="area" id="cat_id_3" class="small form-control">
+                            <option value="0">请选择</option>
+                      </select>                      
+                    <span class="err" id="err_cat_id" style="color:#F00; display:none;"></span>
+                </dd>
+            </dl>
+
+            <dl class="row">
+                <dt class="tit">
+                    <label for="store_name">详细地址</label>
+                </dt>
+                <dd class="opt">
+                    <textarea rows="3" cols="80" name="address" class="input-txt">{$goodsInfo.address}</textarea>
+                </dd>
+            </dl>
+
+            <dl class="row">
+                <dt class="tit">
+                    <label for="record_no">入住时间</label>
+                </dt>
+                <dd class="opt">
+                    <input type="text" value="{$goodsInfo.in_house_time}" name="in_house_time" class="t_mane" />
+
+                </dd>
+            </dl>
+
+            <dl class="row">
+                <dt class="tit">
+                    <label for="record_no">退房时间</label>
+                </dt>
+                <dd class="opt">
+                    <input type="text" value="{$goodsInfo.out_house_time}" name="out_house_time" class="t_mane"  />
+                </dd>
+            </dl>
+
+            <dl class="row">
+                <dt class="tit">
+                    <label for="record_no">价格</label>
+                </dt>
+                <dd class="opt">
+                    <input type="text" value="{$goodsInfo.shop_price}" name="shop_price" class="t_mane" onKeyUp="this.value=this.value.replace(/[^\d.]/g,'')" onpaste="this.value=this.value.replace(/[^\d.]/g,'')" />
+                    <span class="err" id="err_shop_price" style="color:#F00; display:none;"></span>
+                </dd>
+            </dl>
+
+            <dl class="row">
+                <dt class="tit">
+                    <label>房源展示图片</label>
+                </dt>
+                <dd class="opt">
+                    <div class="input-file-show">
+                <span class="show">
+                    <a id="img_a" target="_blank" class="nyroModal" rel="gal" href="{$goodsInfo.original_img}">
+                        <i id="img_i" class="fa fa-picture-o" onmouseover="layer.tips('<img src={$goodsInfo.original_img}>',this,{tips: [1, '#fff']});" onmouseout="layer.closeAll();"></i>
+                    </a>
+                </span>
+                <span class="type-file-box">
+                    <input type="text" id="imagetext" name="original_img" value="{$goodsInfo.original_img}" class="type-file-text">
+                    <input type="button" name="button" id="button1" value="选择上传..." class="type-file-button">
+                    <input class="type-file-file" onClick="GetUploadify(1,'','house','img_call_back')" size="30" hidefocus="true" nc_type="change_site_logo" title="点击前方预览图可查看大图，点击按钮选择文件并提交表单后上传生效">
+                </span>
+                    </div>
+                    <span class="err"></span>
+                    <p class="notic">请上传图片格式文件</p>
+                </dd>
+            </dl>
+
+            <dl class="row">
+                <dt class="tit">
+                    <label>房源图片</label>
+                </dt>
+                <dd class="opt">
+                <div class="tab-pane" id="tab_goods_images">
+                    <table class="table table-bordered">
+                    <tbody>
+                    <tr>
+                    <td>
+                        <foreach name="goodsImages" item="vo" key="k" >
+                            <div style="width:100px; text-align:center; margin: 5px; display:inline-block;" class="goods_xc">
+                                <input type="hidden" value="{$vo['image_url']}" name="goods_images[]">
+                                <a onClick="" href="{$vo['image_url']}" target="_blank">
+                                    <img width="100" height="100" src="{$vo['image_url']}">
+                                </a>
+                                <br>
+                                <a href="javascript:void(0)" onClick="ClearPicArr2(this,'{$vo[\'image_url\']}')">删除</a>
+                            </div>
+                        </foreach>
+
+                        <div class="goods_xc" style="width:100px; text-align:center; margin: 5px; display:inline-block;">
+                            <input type="hidden" name="goods_images[]" value="" />
+                            <a href="javascript:void(0);" onClick="GetUploadify(3,'','house','call_back2');">
+                                <img src="/public/images/add-button.jpg" width="100" height="100" />
+                            </a>
+                            <br/>
+                            <a href="javascript:void(0)">&nbsp;&nbsp;</a>
+                        </div>
+                    </td>
+                    </tr>
+                    </tbody>
+                    </table>
+                </div>
+                </dd>
+            </dl>
+
+
+          <dl class="row">
+            <dt class="tit">
+              <label>是否可加客</label>
+            </dt>
+            <dd class="opt">
+              <div class="onoff">
+                <label for="is_free_shipping1" class="cb-enable <if condition="$goodsInfo[is_free_shipping] eq 1">selected</if>">是</label>
+                <label for="is_free_shipping0" class="cb-disable <if condition="$goodsInfo[is_free_shipping] eq 0">selected</if>">否</label>
+                <input id="is_free_shipping1" name="is_add" value="1" type="radio" <if condition="$goodsInfo[is_free_shipping] eq 1"> checked="checked"</if>>
+                <input id="is_free_shipping0" name="is_add" value="0" type="radio" <if condition="$goodsInfo[is_free_shipping] eq 0"> checked="checked"</if>>
+              </div>
+              <p class="notic"></p>
+            </dd>
+          </dl>
+              
+
+            <dl class="row">
+                <dt class="tit">
+                    <label for="record_no">商品详情描述</label>
+                </dt>
+                <dd class="opt">                    
+                    <textarea class="span12 ckeditor" id="goods_content" name="house_content" title="">{$goodsInfo.house_content}</textarea>
+                    <span class="err" id="err_goods_content" style="color:#F00; display:none;"></span>                    
+                </dd>
+            </dl>                                                                                                                                           
+        </div>
+
+		<div class="ncap-form-default">        
+            <div class="bot">            
+                <input type="hidden" name="id" value="{$goodsInfo.id ? $goodsInfo.id : 0}">
+                <a href="JavaScript:void(0);" class="ncap-btn-big ncap-btn-green" onClick="ajax_submit_form('addEditGoodsForm','{:U(\'House/add_edit\')}');">确认提交</a>
+            </div>
+        </div> 
+     </form>
+</div>
+
+<script>
+     var url="{:url('Admin/Ueditor/index',array('savePath'=>'house'))}";
+     var ue = UE.getEditor('goods_content',{
+         serverUrl :url,
+         zIndex: 999,
+         initialFrameWidth: "100%", //初化宽度
+         initialFrameHeight: 300, //初化高度            
+         focus: false, //初始化时，是否让编辑器获得焦点true或false
+         maximumWords: 99999, removeFormatAttributes: 'class,style,lang,width,height,align,hspace,valign',//允许的最大字符数 'fullscreen',
+         pasteplain:false, //是否默认为纯文本粘贴。false为不使用纯文本粘贴，true为使用纯文本粘贴
+         autoHeightEnabled: true
+     });
+
+    /*
+     * 以下是图片上传方法
+     */
+    // 上传商品图片成功回调函数
+    function call_back(fileurl_tmp){
+        $("#original_img").val(fileurl_tmp);
+    	$("#original_img2").attr('href', fileurl_tmp);
+    }
+ 
+    // 上传商品相册回调函数
+    function call_back2(paths){
+        var  last_div = $(".goods_xc:last").prop("outerHTML");	
+        for (i=0;i<paths.length ;i++ )
+        {                    
+            $(".goods_xc:eq(0)").before(last_div);	// 插入一个 新图片
+            $(".goods_xc:eq(0)").find('a:eq(0)').attr('href',paths[i]).attr('onclick','').attr('target', "_blank");// 修改他的链接地址
+            $(".goods_xc:eq(0)").find('img').attr('src',paths[i]);// 修改他的图片路径
+            $(".goods_xc:eq(0)").find('a:eq(1)').attr('onclick',"ClearPicArr2(this,'"+paths[i]+"')").text('删除');
+            $(".goods_xc:eq(0)").find('input').val(paths[i]); // 设置隐藏域 要提交的值
+        } 			   
+    }
+    /*
+     * 上传之后删除组图input     
+     * @access   public
+     * @val      string  删除的图片input
+     */
+    function ClearPicArr2(obj,path)
+    {
+    	$.ajax({
+            type:'GET',
+            url:"{:U('Admin/Uploadify/delupload')}",
+            data:{action:"del", filename:path},
+            success:function(){
+                $(obj).parent().remove();
+                $.ajax({
+                    type:'GET',
+                    url:"{:U('Admin/Goods/del_goods_images')}",
+                    data:{filename:path},
+                    success:function(){
+
+                    }
+                });
+            }
+		});
+    }
+ 
+
+    function img_call_back(fileurl_tmp)
+    {
+        $("#imagetext").val(fileurl_tmp);
+        $("#img_a").attr('href', fileurl_tmp);
+        $("#img_i").attr('onmouseover', "layer.tips('<img src="+fileurl_tmp+">',this,{tips: [1, '#fff']});");
+    }
+
+
+     function _get_category(id,next,select_id){
+         var url = '/index.php?m=admin&c=House&a=get_area&citycode='+ id;
+         $.ajax({
+             type : "GET",
+             url  : url,
+             error: function(request) {
+                 alert("服务器繁忙, 请联系管理员!");
+                 return;
+             },
+             success: function(v) {
+                 $('#'+next).empty().html(v.list);
+             }
+         });
+     }
+</script>
+</body>
+</html>
