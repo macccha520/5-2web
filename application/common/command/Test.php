@@ -24,60 +24,58 @@
         {
             //省
             if( !$pid && !$thisId) {
-//                 foreach($this->returnArray() as $key=>$pName)
-//                 {
-//                     $this->execute($input,$output,$key,$pName);
-//                 }
-                $url = self::$url . 'index' . self::$pix;
-                $res = $this->stringEncode( self::curl_get($url) );
-
-                preg_match('/<table class=\'provincetable\'.*?>(.*?)<\/table>/s',$res,$match);
-                preg_match_all('/<a .*?>.*?<\/a>/',$match[0],$mat);
-
-                $reg2="/href=\'([^\']+)/";
-                $reg3="/>(.*)<br\/>/";
-                $arr = [];
-                $brr = [];
-                foreach($mat[0] as $key => $v)
-                {
-                    preg_match($reg2,$v,$hrefarray);
-                    preg_match($reg3,$v,$acontent);
-
-                    $arr[ $key ] = str_replace( self::$pix ,'',$hrefarray[1]);
-                    $brr[ $key ] = $acontent[1];
-                }
-
-                foreach(array_combine($arr,$brr) as $key=>$pName )
-                {
-                    //$this->handle($key,$pName);
-                     $model = new CityArea();
-                     if( $model::where("citycode",$key)->count() <= 0)
-                     {
-                         $model->cityname = $pName;
-                         $model->citycode = $key;
-                         $model->save();
-                     }
-                }
-            }
-
-//            else {     //地区
-//                if(!$subUrl) {
-//                    $subUrl = self::$url . $pid . self::$pix;
-//                }
-//                $htmlContent    =   self::curl_get($subUrl);
-//                if(!$htmlContent) {
-//                    var_dump($subUrl);die;
-//                }
+                 foreach($this->returnArray() as $key=>$pName)
+                 {
+                     $this->execute($input,$output,$key,$pName);
+                 }
+//                $url = self::$url . 'index' . self::$pix;
+//                $res = $this->stringEncode( self::curl_get($url) );
 //
-//                preg_match('/<table class=\'.*?\'>(.*?)<\/table>/s',$this->stringEncode( $htmlContent ),$match);
+/*                preg_match('/<table class=\'provincetable\'.*?>(.*?)<\/table>/s',$res,$match);*/
 /*                preg_match_all('/<a .*?>.*?<\/a>/',$match[0],$mat);*/
 //
-//                if (empty($mat[0]) || count($mat[0]) <= 0) {
-//                    //$this->tdHandle($match[0],$pid,$pName);
-//                }else {
-//                    $this->nextHandle($input,$output,$pid,$pName,$subUrl,$mat,$pCode);
+//                $reg2="/href=\'([^\']+)/";
+//                $reg3="/>(.*)<br\/>/";
+//                $arr = [];
+//                $brr = [];
+//                foreach($mat[0] as $key => $v)
+//                {
+//                    preg_match($reg2,$v,$hrefarray);
+//                    preg_match($reg3,$v,$acontent);
+//
+//                    $arr[ $key ] = str_replace( self::$pix ,'',$hrefarray[1]);
+//                    $brr[ $key ] = $acontent[1];
 //                }
-//            }
+//
+//                foreach(array_combine($arr,$brr) as $key=>$pName )
+//                {
+//                    //$this->handle($key,$pName);
+//                     $model = new CityArea();
+//                     if( $model::where("citycode",$key)->count() <= 0)
+//                     {
+//                         $model->cityname = $pName;
+//                         $model->citycode = $key;
+//                         $model->save();
+//                     }
+//                }
+            } else {     //地区
+                if(!$subUrl) {
+                    $subUrl = self::$url . $pid . self::$pix;
+                }
+                $htmlContent    =   self::curl_get($subUrl);
+                if(!$htmlContent) {
+                    var_dump($subUrl);die;
+                }
+
+                preg_match('/<table class=\'.*?\'>(.*?)<\/table>/s',$this->stringEncode( $htmlContent ),$match);
+                preg_match_all('/<a .*?>.*?<\/a>/',$match[0],$mat);
+
+                if (empty($mat[0]) || count($mat[0]) <= 0) {
+                    //$this->tdHandle($match[0],$pid,$pName);
+                }else {
+                    $this->nextHandle($input,$output,$pid,$pName,$subUrl,$mat,$pCode);
+                }
+            }
         }
 
 
