@@ -31,7 +31,7 @@
   `province`  varchar(255) NOT NULL DEFAULT '',
   `city`  varchar(255) NOT NULL DEFAULT '',
   `area`  varchar(255) NOT NULL DEFAULT '',
-  `address` varchar(255) NOT NULL DEFAULT ''
+  `address` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
 ) AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
@@ -55,5 +55,5 @@
   `hid` int(11) unsigned NOT NULL DEFAULT '0',
   `img_path` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`img_id`),
-  KEY `hid` (`pid`)
+  KEY `hid` (`hid`)
 ) AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
