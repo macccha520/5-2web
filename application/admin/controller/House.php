@@ -45,6 +45,8 @@ class House extends Base {
                 $this->ajaxReturn($return_arr);
             }
         }
+        $id = $request->get('id');
+        $this->assign('List',self::$model->find($id));
         $this->assign('area',CityArea::getProvice($request));
         return $this->fetch('_goods');
     }

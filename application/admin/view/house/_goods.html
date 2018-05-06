@@ -112,14 +112,14 @@
     </div>
     <!--表单数据-->
     <form method="post" id="addEditGoodsForm">
-<!--通用信息-->
+    <!--通用信息-->
         <div class="ncap-form-default tab_div_1">
             <dl class="row">
                 <dt class="tit">
                     <label for="record_no">房源名称</label>
                 </dt>
                 <dd class="opt">
-                    <input type="text" value="{$goodsInfo.house_name}" name="house_name" class="input-txt"/>
+                    <input type="text" value="{$List.house_name}" name="house_name" class="input-txt"/>
                     <span class="err" id="err_goods_name" style="color:#F00; display:none;"></span>
                 </dd>
             </dl>
@@ -128,7 +128,7 @@
                     <label for="record_no">房源规格</label>
                 </dt>
                 <dd class="opt">
-                    <input type="text" value="{$goodsInfo.house_standard ? $goodsInfo.house_standard : '整套 · 1室2厅1厨1卫'}" name="house_standard" class="input-txt"/>
+                    <input type="text" value="{$List.house_standard ? $List.house_standard : '整套 · 1室2厅1厨1卫'}" name="house_standard" class="input-txt"/>
                 </dd>
             </dl>
             <dl class="row">
@@ -136,7 +136,7 @@
                     <label for="store_name">房源介绍</label>
                 </dt>
                 <dd class="opt">
-                    <textarea rows="3" cols="80" name="house_introduce" class="input-txt">{$goodsInfo.house_introduce}</textarea>
+                    <textarea rows="3" cols="80" name="house_introduce" class="input-txt">{$List.house_introduce}</textarea>
                 </dd>
             </dl>
             <dl class="row">
@@ -144,7 +144,7 @@
                     <label for="store_name">周边介绍</label>
                 </dt>
                 <dd class="opt">
-                    <textarea rows="3" cols="80" name="around_introduce" class="input-txt">{$goodsInfo.around_introduce}</textarea>
+                    <textarea rows="3" cols="80" name="around_introduce" class="input-txt">{$List.around_introduce}</textarea>
                 </dd>
             </dl>
 
@@ -157,14 +157,38 @@
                       <select name="province" id="cat_id" onChange="_get_category(this.value,'cat_id_2','0');" class="small form-control">
                         <option value="0">请选择</option>
                              <foreach name="area" item="v" key="k" >
-                               <option value="{$v.citycode}" >{$v.cityname}</option>
+                                 <if condition="$v.citycode eq $List.province">
+                                        <option value="{$v.citycode}" selected>{$v.cityname}</option>
+                                     <else />
+                                        <option value="{$v.citycode}" >{$v.cityname}</option>
+                                 </if>
                              </foreach>
                       </select>
                       <select name="city" id="cat_id_2" onChange="_get_category(this.value,'cat_id_3','0');" class="small form-control">
                             <option value="0">请选择</option>
+                            <if condition="$List.city">
+                                <?php $citys = getArea($List->province);?>
+                                <foreach name="citys" item="v">
+                                    <if condition="$v.citycode eq $List.city">
+                                        <option value="{$v.citycode}" selected>{$v.cityname}</option>
+                                        <else />
+                                        <option value="{$v.citycode}" >{$v.cityname}</option>
+                                    </if>
+                                </foreach>
+                            </if>
                       </select>
                       <select name="area" id="cat_id_3" class="small form-control">
-                            <option value="0">请选择</option>
+                          <option value="0">请选择</option>
+                          <if condition="$List.area">
+                              <?php $citys = getArea($List->city);?>
+                              <foreach name="citys" item="v">
+                                  <if condition="$v.citycode eq $List.area">
+                                      <option value="{$v.citycode}" selected>{$v.cityname}</option>
+                                      <else />
+                                      <option value="{$v.citycode}" >{$v.cityname}</option>
+                                  </if>
+                              </foreach>
+                          </if>
                       </select>                      
                     <span class="err" id="err_cat_id" style="color:#F00; display:none;"></span>
                 </dd>
@@ -175,7 +199,7 @@
                     <label for="store_name">详细地址</label>
                 </dt>
                 <dd class="opt">
-                    <textarea rows="3" cols="80" name="address" class="input-txt">{$goodsInfo.address}</textarea>
+                    <textarea rows="3" cols="80" name="address" class="input-txt">{$List.address}</textarea>
                 </dd>
             </dl>
 
@@ -184,7 +208,7 @@
                     <label for="record_no">入住时间</label>
                 </dt>
                 <dd class="opt">
-                    <input type="text" value="{$goodsInfo.in_house_time}" name="in_house_time" class="t_mane" />
+                    <input type="text" value="{$List.in_house_time}" name="in_house_time" class="t_mane" />
 
                 </dd>
             </dl>
@@ -194,7 +218,7 @@
                     <label for="record_no">退房时间</label>
                 </dt>
                 <dd class="opt">
-                    <input type="text" value="{$goodsInfo.out_house_time}" name="out_house_time" class="t_mane"  />
+                    <input type="text" value="{$List.out_house_time}" name="out_house_time" class="t_mane"  />
                 </dd>
             </dl>
 
@@ -203,7 +227,7 @@
                     <label for="record_no">价格</label>
                 </dt>
                 <dd class="opt">
-                    <input type="text" value="{$goodsInfo.shop_price}" name="shop_price" class="t_mane" onKeyUp="this.value=this.value.replace(/[^\d.]/g,'')" onpaste="this.value=this.value.replace(/[^\d.]/g,'')" />
+                    <input type="text" value="{$List.shop_price}" name="shop_price" class="t_mane" onKeyUp="this.value=this.value.replace(/[^\d.]/g,'')" onpaste="this.value=this.value.replace(/[^\d.]/g,'')" />
                     <span class="err" id="err_shop_price" style="color:#F00; display:none;"></span>
                 </dd>
             </dl>
@@ -215,12 +239,12 @@
                 <dd class="opt">
                     <div class="input-file-show">
                 <span class="show">
-                    <a id="img_a" target="_blank" class="nyroModal" rel="gal" href="{$goodsInfo.original_img}">
-                        <i id="img_i" class="fa fa-picture-o" onmouseover="layer.tips('<img src={$goodsInfo.original_img}>',this,{tips: [1, '#fff']});" onmouseout="layer.closeAll();"></i>
+                    <a id="img_a" target="_blank" class="nyroModal" rel="gal" href="{$List.original_img}">
+                        <i id="img_i" class="fa fa-picture-o" onmouseover="layer.tips('<img src={$List.original_img}>',this,{tips: [1, '#fff']});" onmouseout="layer.closeAll();"></i>
                     </a>
                 </span>
                 <span class="type-file-box">
-                    <input type="text" id="imagetext" name="original_img" value="{$goodsInfo.original_img}" class="type-file-text">
+                    <input type="text" id="imagetext" name="original_img" value="{$List.original_img}" class="type-file-text">
                     <input type="button" name="button" id="button1" value="选择上传..." class="type-file-button">
                     <input class="type-file-file" onClick="GetUploadify(1,'','house','img_call_back')" size="30" hidefocus="true" nc_type="change_site_logo" title="点击前方预览图可查看大图，点击按钮选择文件并提交表单后上传生效">
                 </span>
@@ -240,14 +264,15 @@
                     <tbody>
                     <tr>
                     <td>
-                        <foreach name="goodsImages" item="vo" key="k" >
+                        <?php $imgs=getHouseImg($List['id']);?>
+                        <foreach name="$imgs" item="vo" key="k" >
                             <div style="width:100px; text-align:center; margin: 5px; display:inline-block;" class="goods_xc">
-                                <input type="hidden" value="{$vo['image_url']}" name="goods_images[]">
-                                <a onClick="" href="{$vo['image_url']}" target="_blank">
-                                    <img width="100" height="100" src="{$vo['image_url']}">
+                                <input type="hidden" value="{$vo['img_path']}" name="goods_images[]">
+                                <a onClick="" href="{$vo['img_path']}" target="_blank">
+                                    <img width="100" height="100" src="{$vo['img_path']}">
                                 </a>
                                 <br>
-                                <a href="javascript:void(0)" onClick="ClearPicArr2(this,'{$vo[\'image_url\']}')">删除</a>
+                                <a href="javascript:void(0)" onClick="ClearPicArr2(this,'{$vo[\'img_path\']}')">删除</a>
                             </div>
                         </foreach>
 
@@ -274,10 +299,10 @@
             </dt>
             <dd class="opt">
               <div class="onoff">
-                <label for="is_free_shipping1" class="cb-enable <if condition="$goodsInfo[is_free_shipping] eq 1">selected</if>">是</label>
-                <label for="is_free_shipping0" class="cb-disable <if condition="$goodsInfo[is_free_shipping] eq 0">selected</if>">否</label>
-                <input id="is_free_shipping1" name="is_add" value="1" type="radio" <if condition="$goodsInfo[is_free_shipping] eq 1"> checked="checked"</if>>
-                <input id="is_free_shipping0" name="is_add" value="0" type="radio" <if condition="$goodsInfo[is_free_shipping] eq 0"> checked="checked"</if>>
+                <label for="is_free_shipping1" class="cb-enable <if condition="$List.is_add eq 1">selected</if>">是</label>
+                <label for="is_free_shipping0" class="cb-disable <if condition="$List.is_add eq 0">selected</if>">否</label>
+                <input id="is_free_shipping1" name="is_add" value="1" type="radio" <if condition="$List.is_add eq 1"> checked="checked"</if>>
+                <input id="is_free_shipping0" name="is_add" value="0" type="radio" <if condition="$List.is_add eq 0"> checked="checked"</if>>
               </div>
               <p class="notic"></p>
             </dd>
@@ -289,7 +314,7 @@
                     <label for="record_no">商品详情描述</label>
                 </dt>
                 <dd class="opt">                    
-                    <textarea class="span12 ckeditor" id="goods_content" name="house_content" title="">{$goodsInfo.house_content}</textarea>
+                    <textarea class="span12 ckeditor" id="goods_content" name="house_content" title="">{$List.house_content}</textarea>
                     <span class="err" id="err_goods_content" style="color:#F00; display:none;"></span>                    
                 </dd>
             </dl>                                                                                                                                           
@@ -297,7 +322,7 @@
 
 		<div class="ncap-form-default">        
             <div class="bot">            
-                <input type="hidden" name="id" value="{$goodsInfo.id ? $goodsInfo.id : 0}">
+                <input type="hidden" name="id" value="{$List.id ? $List.id : 0}">
                 <a href="JavaScript:void(0);" class="ncap-btn-big ncap-btn-green" onClick="ajax_submit_form('addEditGoodsForm','{:U(\'House/add_edit\')}');">确认提交</a>
             </div>
         </div> 

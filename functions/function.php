@@ -1,24 +1,8 @@
 <?php
-/**
- * tpshop
- * ============================================================================
- * * 版权所有 2015-2027 深圳搜豹网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.tp-shop.cn
- * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和使用 .
- * 不允许对程序代码以任何形式任何目的的再发布。
- * 采用TP5助手函数可实现单字母函数M D U等,也可db::name方式,可双向兼容
- * ============================================================================
- * $Author: IT宇宙人 2015-08-10 $
- */
- 
- 
-/**
- * @param $arr
- * @param $key_name
- * @return array
- * 将数据库中查出的列表以指定的 id 作为数组的键名 
- */
+
+use think\Db;
+use think\cache;
+
 function convert_arr_key($arr, $key_name)
 {
 	$arr2 = array();
@@ -675,4 +659,24 @@ function urlsafe_b64encode($string)
     $data = base64_encode($string);
     $data = str_replace(array('+','/','='),array('-','_',''),$data);
     return $data;
+}
+
+if(!function_exists('getHouseImg')) {
+    function getHouseImg($hid) {
+        return Db::name('house_img')->where('hid',$hid)->select();
+    }
+}
+
+
+if(!function_exists('getArea')) {
+    function getArea($citycode) {
+        if( !$citycode || empty($citycode)) {
+            return Db::name('city_area')->where('pid',0)
+                    ->field('cityname,citycode')
+                    ->select();
+        }
+        return Db::name('city_area')->where('pcode',$citycode)
+                    ->field('cityname,citycode')
+                    ->select();
+    }
 }
