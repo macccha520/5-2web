@@ -40,14 +40,13 @@
         }
 
 
-        public function addEdit(Request $request)
+        public function addEdit(Request $request,$res=true)
         {
             $id = (int) $request->post('id');
             if($id > 0 ) {
-                $res = self::where('id',$id)->update($request->post());
+                self::where('id',$id)->update($request->post());
                 $this->dealImg($id,$request);
             }else {
-
                 $model = new self();
                 $res = $model->data( $request->post() )->save();
                 $this->dealImg($model->getLastInsID(),$request);

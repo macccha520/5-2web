@@ -9,58 +9,37 @@ function ajax_submit_form(form_id,submit_url){
          if(before_request == 0)
             return false;
               
-	$("[id^='err_']").hide();  // 隐藏提示
-    $.ajax({
+	    $("[id^='err_']").hide();  // 隐藏提示
+        $.ajax({
                 type : "POST",
                 url  : submit_url,
                 data : $('#'+form_id).serialize(),// 你的formid                
                 error: function(request) {
-                        alert("服务器繁忙, 请联系管理员!");
+                    alert("服务器繁忙, 请联系管理员!");
                 },
                 success: function(v) {
                     before_request = 1; // 标识ajax 请求已经返回
                     var v =  eval('('+v+')');
-                        // 验证成功提交表单
-                    if(v.hasOwnProperty('status'))
-                    {      
-					    //layer.alert(v.msg);						
+
+                    if(v.hasOwnProperty('status')) {
 						layer.msg(v.msg, {
-						  icon: 1,   // 成功图标
-						  time: 2000 //2秒关闭（如果不配置，默认是3秒）
-						});							
-						
-                    	// 删除按钮
-                		//layer.confirm('确认删除？', {
-                		//	btn: ['确定'] //按钮
-                		//}, function () {
-                			
-                		//}, function () {
-                		//});
-                		
-                        if(v.status == 1)
-						{							
-							if(v.hasOwnProperty('data')){
-								if(v.data.hasOwnProperty('url')){
-									location.href = v.data.url;
-								}else{
-									location.href = location.href;
-								}
-							}else{
-								location.href = location.href;
-							}
-							return true;
-                        }
-                        if(v.status == 0)
-                        {                            
-                            return false;
-                        }
-                            //return false;
+						  icon: 1,
+						  time: 3000
+						},function () {
+                            if(v.status == 1)
+                            {
+                                location.href = v.data.url;
+                            }
+                            if(v.status == 0)
+                            {
+                                return false;
+                            }
+                            for(var i in v['data'])
+                            {
+                                $("#err_"+i).text(v['data'][i]).show(); // 显示对于的 错误提示
+                            }
+                        });
                     }
-                         // 验证失败提示错误
-                     for(var i in v['data'])
-                     {
-                        $("#err_"+i).text(v['data'][i]).show(); // 显示对于的 错误提示
-                     }
                 }
             });   
             before_request = 0; // 标识ajax 请求已经发出
