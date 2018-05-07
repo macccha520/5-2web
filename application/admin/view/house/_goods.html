@@ -83,6 +83,7 @@
 <!--以下是在线编辑器 代码 -->
 <load href="__ROOT__/public/plugins/Ueditor/ueditor.config.js"/>
 <load href="__ROOT__/public/plugins/Ueditor/ueditor.all.min.js"/>
+<script type="text/javascript" src="__ROOT__/public/admin/laydate/laydate.js"></script>
 <script type="text/javascript" charset="utf-8" src="__ROOT__/public/plugins/Ueditor/lang/zh-cn/zh-cn.js"></script>
 <!--以上是在线编辑器 代码  end-->
 <body style="background-color: #FFF; overflow: auto;">
@@ -208,8 +209,7 @@
                     <label for="record_no">入住时间</label>
                 </dt>
                 <dd class="opt">
-                    <input type="text" value="{$List.in_house_time}" name="in_house_time" class="t_mane" />
-
+                    <input type="text" value="{$List.in_house_time}" name="in_house_time" class="t_mane" id="in_house_time"/>
                 </dd>
             </dl>
 
@@ -218,7 +218,7 @@
                     <label for="record_no">退房时间</label>
                 </dt>
                 <dd class="opt">
-                    <input type="text" value="{$List.out_house_time}" name="out_house_time" class="t_mane"  />
+                    <input type="text" value="{$List.out_house_time}" name="out_house_time" class="t_mane"  id="out_house_time"/>
                 </dd>
             </dl>
 
@@ -330,6 +330,16 @@
 </div>
 
 <script>
+    laydate.render({
+        elem: '#in_house_time'
+        ,type: 'time'
+        ,format: 'H点M分'
+    });
+    laydate.render({
+        elem: '#out_house_time'
+        ,type: 'time'
+        ,format: 'H点M分'
+    });
      var url="{:url('Admin/Ueditor/index',array('savePath'=>'house'))}";
      var ue = UE.getEditor('goods_content',{
          serverUrl :url,

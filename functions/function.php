@@ -680,3 +680,10 @@ if(!function_exists('getArea')) {
                     ->select();
     }
 }
+
+if(!function_exists('getAreaDetail')) {
+    function getAreaDetail($citycode) {
+        return Db::name('city_area')->where('pcode',$citycode)
+            ->getField('cityname');
+    }
+}

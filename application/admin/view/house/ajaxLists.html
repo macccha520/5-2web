@@ -6,7 +6,7 @@
                   <div style="width: 24px;"><i class="ico-check"></i></div>
                 </td>
 			 <td class="handle" >
-                <div style="text-align:left;   min-width:50px !important; max-width:inherit !important;">
+                <div style="text-align:left;min-width:50px !important; max-width:inherit !important;">
                   <span class="btn"><em><i class="fa fa-cog"></i>设置<i class="arrow"></i></em>
                   <ul>
                     <li>
@@ -17,27 +17,32 @@
                         <a href="/Admin/house/add_edit/id/{$list.id}">
                             编辑商品</a>
                     </li>
-                    <li>
-                        <a href="javascript:void(0);" onclick="del_goods('{$list.id}',this)">
-                            删除商品</a>
-                    </li>
+                    <!--<li>-->
+                        <!--<a href="javascript:void(0);" onclick="del_goods('{$list.id}',this)">-->
+                            <!--删除商品</a>-->
+                    <!--</li>-->
                   </ul>
                   </span>
                 </div>
-              </td>                
-                <td align="center" axis="col0">
+              </td>
+                  <td align="center" axis="col0">
+                      <div style="width: 50px;">{$list.id}</div>
+                  </td>
+                  <td align="center" axis="col0">
                   <div style="width: 50px;">
                       <img src="{$list.original_img}" alt="" onmouseover="layer.tips('<img src={$list.original_img} width=100px>',this,{tips: [1, '#fff']});" onmouseout="layer.closeAll();">
                   </div>
                 </td>                
-                <td align="center" axis="col0">
-                  <div style="text-align: left; width: 300px;">{$list.house_name|getSubstr=0,33}</div>
+                <td align="center" axis="col0" title="{$list.house_name|getSubstr=0,33}">
+                  <div style="text-align: left; width: 200px;">{$list.house_name|getSubstr=0,33}</div>
+                </td>
+                <td align="center" axis="col0" title="{$list.house_standard}">
+                  <div style="text-align: center; width: 130px;">{$list.house_standard}</div>
                 </td>
                 <td align="center" axis="col0">
-                  <div style="text-align: center; width: 100px;">{$list.house_name}</div>
-                </td>
-                <td align="center" axis="col0">
-                  <div style="text-align: center; width: 100px;">eqweqw</div>
+                  <div style="text-align: center; width: 300px;" title="{$list.province|getAreaDetail}-{$list.city|getAreaDetail}-{$list.area|getAreaDetail}-{$list.address}">
+                      {$list.province|getAreaDetail}-{$list.city|getAreaDetail}-{$list.area|getAreaDetail}-{$list.address}
+                  </div>
                 </td>
                 <td align="center" axis="col0">
                   <div style="text-align: center; width: 50px;">{$list.shop_price}</div>
@@ -46,9 +51,9 @@
                 <td align="center" axis="col0">
                   <div style="text-align: center; width: 50px;">
                       <if condition="$list.is_on_sale eq 1">
-                        <span class="yes" onClick="changeTableVal('goods','id','{$list.id}','is_on_sale',this)" ><i class="fa fa-check-circle"></i>是</span>
+                        <span class="yes" onClick="changeTableVal('house','id','{$list.id}','is_on_sale',this)" ><i class="fa fa-check-circle"></i>是</span>
                           <else />
-                        <span class="no" onClick="changeTableVal('goods','id','{$list.id}','is_on_sale',this)" ><i class="fa fa-ban"></i>否</span>
+                        <span class="no" onClick="changeTableVal('house','id','{$list.id}','is_on_sale',this)" ><i class="fa fa-ban"></i>否</span>
                       </if>
                   </div>
                 </td>    
@@ -67,7 +72,10 @@
         </table>
         <!--分页位置-->
         {$lists.page}
+        <!--{$lists.sql}-->
+        <!--{:dump($lists.form)}-->
 		<script>
+
             // 点击分页触发的事件
             $(".pagination  a").click(function(){
                 cur_page = $(this).data('p');

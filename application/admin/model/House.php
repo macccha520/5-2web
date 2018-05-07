@@ -11,6 +11,8 @@
         protected $builder;
         protected $builder_count;
         protected $page;
+        protected $sale_status = [0,1];
+
 
         public function builder_count()
         {
@@ -24,17 +26,37 @@
             $this->page = new AjaxPage($this->builder_count,10);
         }
 
+        public function set_builder(Request $request)
+        {
+            $this->builder = self::field('*');
+
+            if( $request->has('is_on_sale') && $request->post('is_on_sale') ) {
+                $this->builder = $this->builder
+                    ->where('is_on_sale',$request->post('is_on_sale'));
+            }
+            if( $request->has('key_word') && $request->post('key_word') ) {
+                $key_word = strip_tags(trim($request->post('key_word')));
+                $this->builder = $this->builder
+                    ->where('house_name','like',"%{$key_word}%");
+            }
+        }
+
 
         public function getList(Request $request)
         {
-            //$this->builder = Db::name('house')->field('*');
-            $this->builder = self::field('*');
+            $this->set_builder($request);
             $this->builder_count();
-
+            $this->set_builder($request);
             return [
                 'list' => $this->builder
                             ->limit($this->page->firstRow,$this->page->listRows)
+                            ->order('id desc')
                             ->select(),
+                'sql'  =>  $this->builder
+                            ->limit($this->page->firstRow,$this->page->listRows)
+                            ->order('id desc')
+                            ->getLastSql(),
+                'form' => $request->post(),
                 'page' => $this->page->show()
             ];
         }
