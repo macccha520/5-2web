@@ -1,6 +1,7 @@
 {
     "require": {
         "overtrue/wechat": "~4.0",
-        "lcobucci/jwt": "^3.2"
+        "lcobucci/jwt": "^3.2",
+        "overtrue/easy-sms": "^1.0"
     }
 }

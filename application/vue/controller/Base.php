@@ -6,7 +6,6 @@
     use think\Error;
     use think\Request;
     use think\Response;
-    use Lcobucci\JWT\Builder;
     use Lcobucci\JWT\Parser;
     use Lcobucci\JWT\ValidationData;
 
@@ -65,8 +64,10 @@
 
         private function JwtAuthCode()
         {
-            $token = (new Parser())->parse((string) $this->AuthCode); // Parses from a string
+            // Parses from a string
+            $token = (new Parser())->parse((string) $this->AuthCode);
             $checkUid = $token->getHeader('jti');
+            $checkUid = $token->getClaim('uid');
 
             $data = new ValidationData();
             $data->setId( $checkUid );
