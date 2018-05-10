@@ -8,25 +8,13 @@
 
     class WechatPay extends Base
     {
-        protected static $config = [
-            // 必要配置
-            'app_id'             => 'xxxx',
-            'mch_id'             => 'your-mch-id',
-            'key'                => 'key-for-signature',   // API 密钥
-
-            // 如需使用敏感接口（如退款、发送红包等）需要配置 API 证书路径(登录商户平台下载 API 证书)
-            'cert_path'          => 'path/to/your/cert.pem', // XXX: 绝对路径！！！！
-            'key_path'           => 'path/to/your/key',      // XXX: 绝对路径！！！！
-
-            'notify_url'         => '默认的订单回调地址',     // 你也可以在下单时单独设置来想覆盖它
-        ];
         protected $app;
         protected $payjssdk;
 
         public function __construct()
         {
             parent::__construct();
-            $this->app = Factory::payment( self::$config );
+            $this->app = Factory::payment( config('wechat.payment') );
             $this->payjssdk = $this->app->jssdk;
         }
 
@@ -45,15 +33,15 @@
         }
 
         //1.WeixinJSBridge:
-        public function getWeixinJSBridge()
+        public function getWeixinJSBridge($prepayId)
         {
-            $this->payjssdk->bridgeConfig($prepayId);
+            return $this->payjssdk->bridgeConfig($prepayId);
         }
 
         //2.Jssdk
-        public function getJsSdk()
+        public function getJsSdk($prepayId)
         {
-            $this->payjssdk->bridgeConfig($prepayId);
+           return $this->payjssdk->bridgeConfig($prepayId);
         }
 
 
@@ -61,7 +49,10 @@
         public function refundbyTransactionId()
         {
             $result = $this->app->refund->byTransactionId(
-                'transaction-id-xxx', 'refund-no-xxx', 10000, 10000, [
+                'transaction-id-xxx',
+                'refund-no-xxx',
+                10000,
+                10000, [
                 // 可在此处传入其他参数，详细参数见微信支付文档
                 'refund_desc' => '商品已售完',
             ]);
@@ -72,7 +63,10 @@
         {
             // Example:
             $result = $this->app->refund->byOutTradeNumber(
-                'out-trade-no-xxx', 'refund-no-xxx', 20000, 1000, [
+                'out-trade-no-xxx',
+                'refund-no-xxx',
+                20000,
+                1000, [
                 // 可在此处传入其他参数，详细参数见微信支付文档
                 'refund_desc' => '退运费',
             ]);
@@ -88,9 +82,7 @@
                 if (!$order || $order->paid_at) { // 如果订单不存在 或者 订单已经支付过了
                     return true; // 告诉微信，我已经处理完了，订单没找到，别再通知我了
                 }
-
                 ///////////// <- 建议在这里调用微信的【订单查询】接口查一下该笔订单的情况，确认是已经支付 /////////////
-
                 if ($message['return_code'] === 'SUCCESS') { // return_code 表示通信状态，不代表支付状态
                     // 用户是否支付成功
                     if (array_get($message, 'result_code') === 'SUCCESS') {

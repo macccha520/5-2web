@@ -11,4 +11,9 @@
         {
             parent::__construct();
         }
+
+        public function index()
+        {
+            parent::WechatUserinfo();
+        }
     }

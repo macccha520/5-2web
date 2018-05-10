@@ -51,7 +51,27 @@
          * callback：OAuth授权完成后的回调页地址
          */
         'oauth' => [
-            'scopes'   => ['snsapi_userinfo'],
-            'callback' => '/examples/oauth_callback.php',
+            'app_id' => 'wx3cf0f39249eb0exx',
+            'secret' => 'f1c242f4f28f735d4687abb469072axx',
+            // 指定 API 调用返回结果的类型：array(default)/collection/object/raw/自定义类名
+            'response_type' => 'array',
+            'oauth' => [
+                'scopes'   => ['snsapi_userinfo'],
+                'callback' => '/oauth_callback',
+            ],
+            'log' => [
+                'level' => 'debug',
+                'file' => __DIR__.'/wechat.log',
+            ],
         ],
+
+        //payment
+        'payment'=> [
+            'app_id'             => 'xxxx',
+            'mch_id'             => 'your-mch-id',
+            'key'                => 'key-for-signature',   // API 密钥
+            'cert_path'          => 'path/to/your/cert.pem', // XXX: 绝对路径！！！！
+            'key_path'           => 'path/to/your/key',      // XXX: 绝对路径！！！！
+            'notify_url'         => '默认的订单回调地址',
+        ]
     ];

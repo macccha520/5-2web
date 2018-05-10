@@ -10,54 +10,57 @@
     class WechatBase extends controller
     {
         protected $app;
-        protected static $config = [
-            'app_id' => 'wx3cf0f39249eb0exx',
-            'secret' => 'f1c242f4f28f735d4687abb469072axx',
-            // 指定 API 调用返回结果的类型：array(default)/collection/object/raw/自定义类名
-            'response_type' => 'array',
-
-            'log' => [
-                'level' => 'debug',
-                'file' => __DIR__.'/wechat.log',
-            ],
-        ];
 
         public function __construct()
         {
             parent::__construct();
-            $this->app = Factory::officialAccount( self::$config );
+            $this->app = Factory::officialAccount( config('wechat.oauth') );
         }
 
         //
-        public function WechatUserScope ()
+        public function WechatUserinfo ()
         {
-            $oauth = $this->app->oauth;
-            $user = $oauth->user();
-
-            $token = (new Builder())->setIssuer('http://example.com') // Configures the issuer (iss claim)
-                    ->setAudience('http://example.org') // Configures the audience (aud claim)
-                    ->setId('4f1g23a12aa', true) // Configures the id (jti claim), replicating as a header item
-                    ->setIssuedAt(time()) // Configures the time that the token was issue (iat claim)
-                    ->setNotBefore(time() + 60) // Configures the time that the token can be used (nbf claim)
-                    ->setExpiration(time() + 3600) // Configures the expiration time of the token (exp claim)
-                    ->set('uid', 1) // Configures a new claim, called "uid"
-                    ->getToken(); // Retrieves the generated token
-
-
-            $token->getHeaders(); // Retrieves the token headers
-            $token->getClaims(); // Retrieves the token claims
-
-            echo $token->getHeader('jti'); // will print "4f1g23a12aa"
-            echo $token->getClaim('iss'); // will print "http://example.com"
-            echo $token->getClaim('uid'); // will print "1"
-            echo $token; //
+            return json([
+                'code'  => config('httpCode.OPTION_SUECCESS'),
+                'msg'   => 'SUECCESS',
+                'data'  => [
+                    'AuthCode'=>  $this->setJwtAuthCode(),
+                    'nickname'=>  12312,
+                    'openid'  =>  'qweqweuqwue',
+                    'head_pic'=>  3123123
+                ]
+            ],config('httpCode.OPTION_SUECCESS'), [])->send();
         }
 
         //
         protected function PageJssdk()
         {
-            echo $this->app->jssdk->buildConfig(['onMenuShareQQ'],true);
+            $this->app->jssdk->buildConfig(['onMenuShareQQ'],true);
         }
 
 
+        private  function setJwtAuthCode()
+        {
+            // Configures the time that the token was issue (iat claim)
+            $token = (new Builder())->setIssuedAt(time())
+                    ->setNotBefore(time() + 60)
+                    ->setExpiration(time() + 3600)
+                    ->set('uid', 1)
+                    ->getToken();
+
+            return (string) $token;
+        }
+
+
+        private function WechatUserScope()
+        {
+             $oauth = $this->app->oauth;
+             $user = $oauth->user();
+             $user->getId();  // 对应微信的 OPENID
+             $user->getNickname(); // 对应微信的 nickname
+             $user->getName(); // 对应微信的 nickname
+             $user->getAvatar(); // 头像网址
+             $user->getOriginal(); // 原始API返回的结果
+             $user->getToken(); // access_token， 比如用于地址共享时使用
+        }
     }

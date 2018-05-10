@@ -22,7 +22,7 @@
         public function __construct()
         {
             parent::__construct();
-            $this->Method =  request()->action();
+            $this->Method =  strtolower(request()->action());
             $AuthCode = request()->header('AuthCode');
             $this->AuthCode = $AuthCode && strlen($AuthCode) >0 ? $AuthCode : self::authCode;
             $this->PostData = request()->post();
@@ -66,7 +66,6 @@
         {
             // Parses from a string
             $token = (new Parser())->parse((string) $this->AuthCode);
-            $checkUid = $token->getHeader('jti');
             $checkUid = $token->getClaim('uid');
 
             $data = new ValidationData();
