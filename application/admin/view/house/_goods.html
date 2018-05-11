@@ -307,11 +307,19 @@
               <p class="notic"></p>
             </dd>
           </dl>
-              
 
             <dl class="row">
                 <dt class="tit">
-                    <label for="record_no">商品详情描述</label>
+                    <label for="record_no">加客数</label>
+                </dt>
+                <dd class="opt">
+                    <input type="text" value="{$List.add_people ? $List.add_people : 0}" name="add_people" class="t_mane" onKeyUp="this.value=this.value.replace(/[^\d.]/g,'')" onpaste="this.value=this.value.replace(/[^\d.]/g,'')" />
+                </dd>
+            </dl>
+
+            <dl class="row">
+                <dt class="tit">
+                    <label for="record_no">房源详情描述</label>
                 </dt>
                 <dd class="opt">                    
                     <textarea class="span12 ckeditor" id="goods_content" name="house_content" title="">{$List.house_content}</textarea>

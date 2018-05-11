@@ -104,12 +104,12 @@ return	array(
 //					array('name' => '分成日志', 'act'=>'rebate_log', 'op'=>'Distribut'),
 //			)),
 
-    	    array('name' => '微信','child' => array(
-    	        array('name' => '公众号配置', 'act'=>'index', 'op'=>'Wechat'),
+//    	    array('name' => '微信','child' => array(
+//    	        array('name' => '公众号配置', 'act'=>'index', 'op'=>'Wechat'),
 //    	        array('name' => '微信菜单管理', 'act'=>'menu', 'op'=>'Wechat'),
 //    	        array('name' => '文本回复', 'act'=>'text', 'op'=>'Wechat'),
     	        //array('name' => '图文回复', 'act'=>'img', 'op'=>'Wechat'),
-    	    )),
+//    	    )),
 //			array('name' => '统计','child' => array(
 //					array('name' => '销售概况', 'act'=>'index', 'op'=>'Report'),
 //					array('name' => '销售排行', 'act'=>'saleTop', 'op'=>'Report'),

@@ -32,6 +32,7 @@
   `city`  varchar(255) NOT NULL DEFAULT '',
   `area`  varchar(255) NOT NULL DEFAULT '',
   `address` varchar(255) NOT NULL DEFAULT '',
+  `add_people` int(11) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
