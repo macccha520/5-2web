@@ -3,6 +3,7 @@
     namespace app\vue\controller;
 
     use think\Controller;
+    use think\Db;
     use think\Error;
     use think\Request;
     use think\Response;
@@ -12,12 +13,13 @@
     class Base extends Controller
     {
         protected $Uid;
+        protected $Userinfo =  [];
         protected $Method;
         protected $AuthCode;
         protected $PostData = [];
         protected $GetData  = [];
         protected $NoCheckMethods = [];
-        const authCode = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJub25lIiwianRpIjoiMSJ9.eyJqdGkiOiIxIiwiaWF0IjoxNTI1NjkwNjYzLCJuYmYiOjE1MjU2OTA2NzUsImV4cCI6MTUyNTY5MDY4MywidWlkIjoxfQ.';
+        const authCode = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJub25lIn0.eyJpYXQiOjE1MjU5NjI1MDQsIm5iZiI6MTUyNTk2MjU2NCwiZXhwIjoxNTI1OTY2MTA0LCJ1aWQiOjF9.';
 
         public function __construct()
         {
@@ -73,10 +75,21 @@
 
             if( true === $token->validate($data) ) {
                 $this->Uid = $checkUid;
+                $this->setUserInfo();
                 return true;
             }
             return false;
         }
 
 
+        private function setUserInfo()
+        {
+            $this->Userinfo = Db::name('users')->find($this->Uid);  
+        }
+
+
+        private function checkUserId()
+        {
+
+        }
     }

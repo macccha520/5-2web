@@ -8,6 +8,7 @@
 
     class Sms extends Base
     {
+        protected $NoCheckMethods = ['send'];
         public function __construct()
         {
             parent::__construct();
