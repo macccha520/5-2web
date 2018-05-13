@@ -14,6 +14,7 @@
                 ->where('start_time','<=',time())
                 ->where('end_time','>=',time())
                 ->order('orderby','asc')
+                ->limit(3)
                 ->select();
 
             foreach ($data as $k=>$val) {
