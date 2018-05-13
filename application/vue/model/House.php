@@ -5,6 +5,7 @@
     use think\Request;
     use think\Model;
 
+
     class House extends Model
     {
         const IS_ON_SALE = 1;
@@ -20,6 +21,9 @@
 
             foreach ($info as $key => $value ) {
                 $info[$key]['original_img'] = SITE_URL . $value->original_img;
+                $info[$key]['province'] =  CityArea::getAddres( $value->province );
+                $info[$key]['city'] =  CityArea::getAddres( $value->city );
+                $info[$key]['area'] =  CityArea::getAddres( $value->area );
             }
 
             return $info;
