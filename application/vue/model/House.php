@@ -28,6 +28,14 @@
 
         public static function getOne($id)
         {
+            $info = self::field( '*' )
+                ->where('is_on_sale',self::IS_ON_SALE)
+                ->select();
 
+            foreach ($info as $key => $value ) {
+                $info[$key]['original_img'] = SITE_URL . $value->original_img;
+            }
+
+            return $info;
         }
     }
