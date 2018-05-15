@@ -368,11 +368,7 @@ class App
         Hook::listen('module_init', $request);
 
         $instance = Loader::controller($controller, $config['url_controller_layer'], $config['controller_suffix'], $config['empty_controller']);
-        
-        if (is_null($instance) && $controller == 'Distribut') {
-			header("Content-type: text/html; charset=utf-8");
-			exit('要使用分销模块请联系TPshop官网客服,官网地址 www.tp-shop.cn');
-        }    		    
+    
         
         if (is_null($instance)) {
             throw new HttpException(404, 'controller not exists:' . Loader::parseName($controller, 1));
@@ -389,13 +385,6 @@ class App
             $call = [$instance, '_empty'];
             $vars = [$actionName];
         } else {
-			
-		//echo $instance.$actionName ;
-        if ($actionName == 'pre_sell_list') {
-			header("Content-type: text/html; charset=utf-8");
-			exit('要使用预售功能请联系TPshop官网客服,官网地址 www.tp-shop.cn');
-        }
-			
             // 操作不存在
             throw new HttpException(404, 'method not exists:' . get_class($instance) . '->' . $action . '()');
         }

@@ -2,15 +2,14 @@
 
     namespace app\vue\controller;
 
-    use think\Controller;
     use think\Db;
-    use think\Error;
+    use app\exception\JsonError;
     use think\Request;
     use think\Response;
     use Lcobucci\JWT\Parser;
     use Lcobucci\JWT\ValidationData;
 
-    class Base extends Controller
+    class Base
     {
         protected $Uid;
         protected $Userinfo =  [];
@@ -23,7 +22,6 @@
 
         public function __construct()
         {
-            parent::__construct();
             $this->Method =  strtolower(request()->action());
             $AuthCode = request()->header('AuthCode');
             $this->AuthCode = $AuthCode && strlen($AuthCode) >0 ? $AuthCode : self::authCode;
@@ -33,9 +31,10 @@
         }
 
 
-        protected function jsonTo( $data,$header= [] )
+        protected function jsonTo( $data,$header= [] ,$statusCode = 200)
         {
             return json([
+                'status_code' => $statusCode,
                 'code'  => config('httpCode.OPTION_SUECCESS'),
                 'msg'   => 'SUECCESS',
                 'data'  => $data
@@ -43,22 +42,11 @@
         }
 
 
-        protected function jsonError( $data,$code='',$msg='',$header= [] )
-        {
-            $code = $code ? $code : config('httpCode.OPTION_FAIL');
-            return json([
-                'code'  => $code,
-                'msg'   => $msg ? $msg : 'OPTION_FAIL',
-                'data'  => $data
-            ],$code, $header)->send();
-        }
-
-
-        public function JwtAuthCheck()
+        protected function JwtAuthCheck()
         {
             if(! in_array( $this->Method, $this->NoCheckMethods) ) {
                 if( false === $this->JwtAuthCode() ) {
-                    $this->jsonError([],config('httpCode.Unauthorized'),'Unauthorized');
+                    throw new JsonError(422, 'TOKEN_NOT_EXIST');
                 }
             }
         }

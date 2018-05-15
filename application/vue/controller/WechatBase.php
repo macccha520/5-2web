@@ -2,18 +2,16 @@
 
     namespace app\vue\controller;
 
-    use think\Controller;
     use think\Request;
     use EasyWeChat\Factory;
     use Lcobucci\JWT\Builder;
 
-    class WechatBase extends controller
+    class WechatBase
     {
         protected $app;
 
         public function __construct()
         {
-            parent::__construct();
             $this->app = Factory::officialAccount( config('wechat.oauth') );
         }
 
