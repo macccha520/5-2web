@@ -86,10 +86,4 @@
         {
             $this->Userinfo = Db::name('users')->find($this->Uid);  
         }
-
-
-        private function checkUserId()
-        {
-
-        }
     }

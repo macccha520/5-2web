@@ -20,22 +20,13 @@
         //
         public function WechatUserinfo ()
         {
-            return json([
-                'code'  => config('httpCode.OPTION_SUECCESS'),
-                'msg'   => 'SUECCESS',
-                'data'  => [
-                    'AuthCode'=>  $this->setJwtAuthCode(),
-                    'nickname'=>  12312,
-                    'openid'  =>  'qweqweuqwue',
-                    'head_pic'=>  3123123
-                ]
-            ],config('httpCode.OPTION_SUECCESS'), [])->send();
+            return $this->setJwtAuthCode();
         }
 
         //
         protected function PageJssdk()
         {
-            $this->app->jssdk->buildConfig(['onMenuShareQQ'],true);
+            return $this->app->jssdk->buildConfig(['onMenuShareQQ'],true);
         }
 
 
@@ -46,21 +37,41 @@
                     ->setNotBefore(time() + 60)
                     ->setExpiration(time() + 3600)
                     ->set('uid', 1)
+                    ->set('nickname','maccha')
                     ->getToken();
 
-            return (string) $token;
+            $data = [
+                'Authorization' => (string) $token,
+                'iat'           => $token->getClaim('iat'),
+                'nbf'           => $token->getClaim('nbf'),
+                'exp'           => $token->getClaim('exp'),
+            ];
+
+            return json([
+                'code'  => config('httpCode.OPTION_SUECCESS'),
+                'msg'   => 'SUECCESS',
+                'data'  => array_merge([
+                    'nickname'=>  'maccha',
+                    'openid'  =>  'yafd909asxqsxsxxasxgga86sd6v',
+                    'head_pic'=>  3123123
+                ],$data)
+            ],config('httpCode.OPTION_SUECCESS'), [])->send();
         }
 
 
-        private function WechatUserScope()
+        private function WechatUserScope(\think\Request $requests)
         {
-             $oauth = $this->app->oauth;
-             $user = $oauth->user();
-             $user->getId();  // 对应微信的 OPENID
-             $user->getNickname(); // 对应微信的 nickname
-             $user->getName(); // 对应微信的 nickname
-             $user->getAvatar(); // 头像网址
-             $user->getOriginal(); // 原始API返回的结果
-             $user->getToken(); // access_token， 比如用于地址共享时使用
+            if( $requests->has('code') && strlen($requests->get('code')) > 0)
+            {
+                $oauth = $this->app->oauth;
+                $user = $oauth->user();
+                $user->getId();  // 对应微信的 OPENID
+                $user->getNickname(); // 对应微信的 nickname
+                $user->getName(); // 对应微信的 nickname
+                $user->getAvatar(); // 头像网址
+                $user->getOriginal(); // 原始API返回的结果
+                $user->getToken(); // access_token， 比如用于地址共享时使用
+            }
+            $this->app->oauth->redirect()->send();
         }
     }

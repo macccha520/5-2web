@@ -1,19 +1,16 @@
 <?php
 
-    namespace app\vue\controller;
+    namespace app\extend;
 
-    use think\Controller;
-    use think\Request;
     use EasyWeChat\Factory;
 
-    class WechatPay extends Base
+    class WechatPay
     {
         protected $app;
         protected $payjssdk;
 
         public function __construct()
         {
-            parent::__construct();
             $this->app = Factory::payment( config('wechat.payment') );
             $this->payjssdk = $this->app->jssdk;
         }

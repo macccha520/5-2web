@@ -40,8 +40,6 @@
         public function getList($Uid=1,Request $request)
         {
             return $this->getBuilders($Uid,$request);
-
-            //return $this->builder->select();
         }
 
 
@@ -72,9 +70,10 @@
                                             ->where('l.status',self::UNUSED_STATUS);
                     break;
             }
-            return [
-                'data'=>$this->builder->order(['l.send_time' => 'DESC', 'l.use_time'])->select(),
-                'sql'=>$this->builder->order(['l.send_time' => 'DESC', 'l.use_time'])->getLastSql()
-            ];
+
+            return $this->builder
+                    ->order(['l.send_time' => 'DESC', 'l.use_time'])
+                    ->limit(3)
+                    ->select();
         }
     }
