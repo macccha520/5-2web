@@ -51,13 +51,13 @@
          * callback：OAuth授权完成后的回调页地址
          */
         'oauth' => [
-            'app_id' => 'wx3cf0f39249eb0exx',
-            'secret' => 'f1c242f4f28f735d4687abb469072axx',
+            'app_id' => 'wx887b35612d441de2',
+            'secret' => 'efdef4673ca1e30693acb5cd1b1dd0d7',
             // 指定 API 调用返回结果的类型：array(default)/collection/object/raw/自定义类名
             'response_type' => 'array',
             'oauth' => [
-                'scopes'   => ['snsapi_userinfo'],
-                'callback' => '/oauth_callback',
+                'scopes'   => ['snsapi_base'],
+                'callback' => 'http://m.hanxvc.com',
             ],
             'log' => [
                 'level' => 'debug',

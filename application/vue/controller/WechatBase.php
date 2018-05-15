@@ -18,9 +18,9 @@
         }
 
         //
-        public function WechatUserinfo ()
+        public function WechatUserinfo (Request $request)
         {
-            return $this->setJwtAuthCode();
+            return $this->WechatUserScope($request);
         }
 
         //
@@ -65,13 +65,17 @@
             {
                 $oauth = $this->app->oauth;
                 $user = $oauth->user();
-                $user->getId();  // 对应微信的 OPENID
-                $user->getNickname(); // 对应微信的 nickname
-                $user->getName(); // 对应微信的 nickname
-                $user->getAvatar(); // 头像网址
-                $user->getOriginal(); // 原始API返回的结果
-                $user->getToken(); // access_token， 比如用于地址共享时使用
+                file_put_contents('1.txt','-------'.PHP_EOL);
+                file_put_contents('1.txt',var_export($user,true));
+                file_put_contents('1.txt','-------'.PHP_EOL);
+//                $user->getId();  // 对应微信的 OPENID
+//                $user->getNickname(); // 对应微信的 nickname
+//                $user->getName(); // 对应微信的 nickname
+//                $user->getAvatar(); // 头像网址
+//                $user->getOriginal(); // 原始API返回的结果
+//                $user->getToken(); // access_token， 比如用于地址共享时使用
+            }else{
+                $this->app->oauth->redirect()->send();
             }
-            $this->app->oauth->redirect()->send();
         }
     }
