@@ -12,8 +12,8 @@
             parent::__construct();
         }
 
-        public function index(Request $request)
+        public function index()
         {
-            parent::WechatUserinfo($request);
+            parent::WechatUserinfo();
         }
     }

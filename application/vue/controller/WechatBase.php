@@ -15,13 +15,13 @@
             $this->app = Factory::officialAccount( config('wechat.oauth') );
         }
 
-        //
-        public function WechatUserinfo (Request $request)
+
+        public function WechatUserinfo ()
         {
-            return $this->WechatUserScope($request);
+            return $this->WechatUserScope();
         }
 
-        //
+
         protected function PageJssdk()
         {
             return $this->app->jssdk->buildConfig(['onMenuShareQQ'],true);
@@ -57,10 +57,12 @@
         }
 
 
-        private function WechatUserScope(\think\Request $requests)
+        private function WechatUserScope()
         {
-            if( $requests->has('code') && strlen($requests->get('code')) > 0)
+            if( request()->has('code')
+                && strlen( request()->get('code')) > 0)
             {
+                //echo 1122;die;
                 $oauth = $this->app->oauth;
                 $user = $oauth->user();
                 file_put_contents('1.txt','-------'.PHP_EOL);
@@ -73,7 +75,7 @@
 //                $user->getOriginal(); // 原始API返回的结果
 //                $user->getToken(); // access_token， 比如用于地址共享时使用
             }else{
-                $this->app->oauth->redirect()->send();
+                return $this->app->oauth->redirect()->send();
             }
         }
     }
