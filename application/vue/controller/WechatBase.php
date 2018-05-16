@@ -32,7 +32,7 @@
         private function WechatUserScope()
         {
             if( request()->has('code')
-                && strlen( request()->post('code')) > 0)
+                && strlen( request()->get('code')) > 0)
             {
                  $this->UserScope();
             }else{
