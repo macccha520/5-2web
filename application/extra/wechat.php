@@ -14,6 +14,10 @@
          * 使用自定义类名时，构造函数将会接收一个 `EasyWeChat\Kernel\Http\Response` 实例
          */
         'response_type' => 'array',
+//        Access-Control-Allow-Origin = "Access-Control-Allow-Origin: *";
+//        add_header 'Access-Control-Allow-Headers' 'Origin,X-Requested-With,Content-Type,Accept'
+//        add_header 'Access-Control-Allow-Methods' 'GET,POST,OPTIONS,PUT,DELETE,PATCH'
+//        add_header 'Access-Control-Allow-Origin' '*'
 
         /**
          * 日志配置
