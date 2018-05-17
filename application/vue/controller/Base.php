@@ -8,6 +8,7 @@
     use think\Response;
     use Lcobucci\JWT\Parser;
     use Lcobucci\JWT\ValidationData;
+    use app\exception\JsonTo;
 
     class Base
     {
@@ -17,7 +18,7 @@
         protected $AuthCode;
         protected $PostData = [];
         protected $GetData  = [];
-        protected $NoCheckMethods = [];
+        protected $NoCheckMethods = ['jsonTo'];
         const authCode = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJub25lIn0.eyJpYXQiOjE1MjU5NjI1MDQsIm5iZiI6MTUyNTk2MjU2NCwiZXhwIjoxNTI1OTY2MTA0LCJ1aWQiOjF9.';
 
         public function __construct()
@@ -31,14 +32,9 @@
         }
 
 
-        protected function jsonTo( $data,$header= [] ,$statusCode = 200)
+        protected function jsonTo( array $data)
         {
-            return json([
-                'status_code' => $statusCode,
-                'code'  => config('httpCode.OPTION_SUECCESS'),
-                'msg'   => 'SUECCESS',
-                'data'  => $data
-            ],config('httpCode.OPTION_SUECCESS'), $header)->send();
+            return new JsonTo($data);
         }
 
 

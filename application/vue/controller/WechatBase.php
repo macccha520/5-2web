@@ -6,6 +6,7 @@
     use think\Db;
     use EasyWeChat\Factory;
     use Lcobucci\JWT\Builder;
+    use app\exception\JsonTo;
 
     class WechatBase
     {
@@ -46,11 +47,12 @@
             $oauth = $this->app->oauth;
             $user = $oauth->user();
             $userinfo = $user->getOriginal();
+//
+//            file_put_contents('1.txt','-------'.PHP_EOL);
+//            file_put_contents('1.txt',var_export($userinfo,true));
+//            file_put_contents('1.txt','-------'.PHP_EOL);
 
-            file_put_contents('1.txt','-------'.PHP_EOL);
-            file_put_contents('1.txt',var_export($userinfo,true));
-            file_put_contents('1.txt','-------'.PHP_EOL);
-
+            return $this->setJwtAuthCode( $this->loginOrReg($userinfo) );
 
             //$user->getId();  // 对应微信的 OPENID
 //                $user->getNickname(); // 对应微信的 nickname
@@ -103,18 +105,18 @@
                     ]);
                 }
             }
-            return $this->setJwtAuthCode($user);
+            return $user;
         }
 
 
-        private  function setJwtAuthCode($user)
+        protected  function setJwtAuthCode($user)
         {
             // Configures the time that the token was issue (iat claim)
             $token = (new Builder())->setIssuedAt(time())
                 ->setNotBefore(time() + 60)
                 ->setExpiration(time() + 3600)
-                ->set('id', $user['user_id'])
-                ->set('nickname',$user['nickname'])
+                //->set('id', $user['user_id'])
+                //->set('nickname',$user['nickname'])
                 ->getToken();
 
             $data = [
@@ -124,14 +126,10 @@
                 'exp'           => $token->getClaim('exp'),
             ];
 
-            return json([
-                'code'  => config('httpCode.OPTION_SUECCESS'),
-                'msg'   => 'SUECCESS',
-                'data'  => array_merge([
-                    'nickname'=>  $user['nickname'],
-                    'openid'  =>  $user['openid'],
-                    'head_pic'=>  $user['head_pic']
-                ],$data)
-            ],config('httpCode.OPTION_SUECCESS'), [])->send();
+           return new JsonTo(array_merge([
+                //'nickname'=>  $user['nickname'],
+                //'openid'  =>  $user['openid'],
+                //'head_pic'=>  $user['head_pic']
+            ],$data));
         }
     }

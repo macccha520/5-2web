@@ -19,7 +19,7 @@
          */
         public function index()
         {
-            return $this->jsonTo( (new Ad())->getList() );
+             $this->jsonTo( (new Ad())->getList() );
         }
 
     }

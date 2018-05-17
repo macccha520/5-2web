@@ -19,7 +19,7 @@ class House extends Base
      */
     public function index(Request $request)
     {
-        return $this->jsonTo( (new model())->getList($request) );
+        $this->jsonTo( (new model())->getList($request) );
     }
 
 
