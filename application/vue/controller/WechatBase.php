@@ -35,7 +35,9 @@
             if( request()->has('code')
                 && strlen( request()->get('code')) > 0)
             {
-                 $this->UserScope();
+                file_put_contents('1.txt','-------'.PHP_EOL);
+                file_put_contents('1.txt',var_export(request()->get('code'),true));
+                file_put_contents('1.txt','-------'.PHP_EOL);
             }else{
                 return $this->app->oauth->redirect()->send();
             }
