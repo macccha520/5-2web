@@ -47,12 +47,12 @@
             $oauth = $this->app->oauth;
             $user = $oauth->user();
             $userinfo = $user->getOriginal();
-//
-//            file_put_contents('1.txt','-------'.PHP_EOL);
-//            file_put_contents('1.txt',var_export($userinfo,true));
-//            file_put_contents('1.txt','-------'.PHP_EOL);
 
-            return $this->setJwtAuthCode( $this->loginOrReg($userinfo) );
+            file_put_contents('1.txt','-------'.PHP_EOL);
+            file_put_contents('1.txt',var_export($userinfo,true));
+            file_put_contents('1.txt','-------'.PHP_EOL);
+
+           // return $this->setJwtAuthCode( $this->loginOrReg($userinfo) );
 
             //$user->getId();  // 对应微信的 OPENID
 //                $user->getNickname(); // 对应微信的 nickname
@@ -63,16 +63,16 @@
         }
 
 
-        protected function loginOrReg($openid)
+        protected function loginOrReg($userInfo)
         {
             $now = time();
             $oauth = 'weixin';
-            $user = get_user_info($openid, 3, $oauth);
+            $user = get_user_info($userInfo['openid'], 3, $oauth);
             $map['last_login'] = $now;
             if (!$user) {
                 //账户不存在 注册一个
                 $map['password'] = '';
-                $map['openid'] = $openid;
+                $map['openid'] = $userInfo['openid'];
                 $map['nickname'] = !empty($userInfo['nickname']) ? $userInfo['nickname'] : '匿名网友';
                 $map['reg_time'] = $now;
                 $map['oauth'] = $oauth;
@@ -99,7 +99,7 @@
                     $map['sex']      = empty($user['sex']) ? 0 : $user['sex'];
                     Db::name('users')->where("user_id", $user['user_id'])->save($map);
                     $user = array_merge($map, [
-                        'openid' => $openid,
+                        'openid' => $userInfo['openid'],
                         'oauth'  => $oauth,
                         'id'     => $user['user_id'],
                     ]);
