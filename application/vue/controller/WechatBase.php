@@ -20,7 +20,6 @@
 
         public function WechatUserinfo ()
         {
-            return new JsonTo(['asdasd'=>123123]);
             return $this->WechatUserScope();
         }
 
