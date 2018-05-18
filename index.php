@@ -22,9 +22,9 @@ define('APP_PATH', __DIR__ . '/application/');
 define('NOW_TIME',$_SERVER['REQUEST_TIME']);
 define('FUNC_PATH', __DIR__ . '/functions/');
 
-header('Access-Control-Allow-Origin:*');
-header('Access-Control-Allow-Methods:GET,POST,OPTIONS,PUT,DELETE,PATCH');
-header('Access-Control-Allow-Headers:Origin,X-Requested-With,Content-Type,Accept');
+//header('Access-Control-Allow-Origin:*');
+//header('Access-Control-Allow-Methods:GET,POST,OPTIONS,PUT,DELETE,PATCH');
+//header('Access-Control-Allow-Headers:Origin,X-Requested-With,Content-Type,Accept');
 
 
 require __DIR__ . '/thinkphp/start.php';
